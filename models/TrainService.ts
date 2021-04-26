@@ -1,3 +1,7 @@
+import type { ILocation } from './Location'
+import type { ICallingPoint } from './CallingPoint'
+import type { ITrainFormation } from './TrainFormation'
+
 export interface ITrainService {
   formation: ITrainFormation
   /**
@@ -184,117 +188,9 @@ export interface ITrainService {
   delayReason: string | null
 }
 
-export interface ITrainFormation {
-  /**
-   * Average percentage load across train.
-   *
-   * `0` if unknown
-   */
-  avgLoading: number
-
-  avgLoadingSpecified: boolean
-
-  coaches: ITrainFormationCoach[]
-}
-
-export interface ITrainFormationCoach {
-  coachClass: string
-  /**
-   * Percentage load.
-   *
-   * `0` if unknown
-   */
-  loading: number
-
-  loadingSpecified: boolean
-
-  number: string
-
-  toilet: {
-    status: 0 | 1 | 2
-
-    value: 'None' | 'Standard' | 'Accessible' | 'Unknown'
-  }
-}
-
-export interface ILocation {
-  locationName: string
-  crs: string
-  /**
-   * Via text
-   *
-   * @example "via Gatwick Airport"
-   */
-  via: string | null
-  futureChangeTo: string | null
-  assocIsCancelled: boolean
-}
-
-export interface ICallingPoint {
-  locationName: string
-
-  crs: string
-  /**
-   * Scheduled time.
-   *
-   * Arrival time if in `previousCallingPoints` or departure time if in `subsequentCallingPoints`.
-   *
-   * @example "17:05"
-   */
-  st: string
-
-  /**
-   * Estimated time.
-   *
-   * Arrival time if in `previousCallingPoints` or departure time if in `subsequentCallingPoints`.
-   *
-   * Only present if `at` is not.
-   *
-   * @example "17:05"
-   * @example "On time"
-   * @example "Delayed"
-   */
-  et: string
-
-  /**
-   * Actual time.
-   *
-   * Arrival time if in `previousCallingPoints` or departure time if in `subsequentCallingPoints`.
-   *
-   * Only present if `et` is not.
-   *
-   * @example "17:05"
-   * @example "On time"
-   */
-  at: string
-
-  isCancelled: boolean
-
-  /**
-   * Number of coaches in the train.
-   *
-   * `0` or `null` means unknown.
-   */
-  length: number | null
-
-  /**
-   * True if the service detaches units from the front at this location.
-   *
-   * In my experience, it's never `true`.
-   */
-  detachFront: boolean
-
-  formation: ITrainFormation | null
-
-  /**
-   * Unsure about type.
-   *
-   * List of alert strings to display for this location.
-   */
-  adhocAlerts: AdhocAlerts
-}
-
 /**
- * Adhoc Alerts. May contain HTML elements.
+ * Adhoc Alerts. May contain HTML elements?
+ *
+ * Unsure about this type.
  */
 export type AdhocAlerts = string[]
