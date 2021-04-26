@@ -59,25 +59,30 @@ const StateManager: React.FC = () => {
    * Fetch the full stations list from the API.
    */
   async function fetchStationsList(abortController: AbortController) {
-    const list = (await (
-      await fetch(GenerateHuxley2Url('crs'), {
-        signal: abortController.signal,
-      })
-    ).json()) as StationPair[]
+    try {
+      const list = (await (
+        await fetch(GenerateHuxley2Url('crs'), {
+          signal: abortController.signal,
+        })
+      ).json()) as StationPair[]
 
-    const diskData = { lastUpdated: Date.now(), data: list }
+      const diskData = { lastUpdated: Date.now(), data: list }
 
-    await Promise.all([
-      new Promise(() => {
-        if (!abortController.signal.aborted) setStationsList({ data: list, loaded: true, offlineCopy: false })
-      }),
-      AsyncStorage.setItem('stationsList', JSON.stringify(diskData)),
-    ])
+      await Promise.all([
+        new Promise(() => {
+          if (!abortController.signal.aborted) setStationsList({ data: list, loaded: true, offlineCopy: false })
+        }),
+        AsyncStorage.setItem('stationsList', JSON.stringify(diskData)),
+      ])
+    } catch (e) {
+      // Errored while fetching or saving -- load from offline
+      loadStationsList(abortController, true)
+    }
   }
 
   const loadStationsList = useCallback(
-    async abortController => {
-      if (netInfo.isInternetReachable) {
+    async (abortController, forceOffline = false) => {
+      if (!forceOffline && netInfo.isInternetReachable) {
         await fetchStationsList(abortController)
       } else {
         const allKeys = await AsyncStorage.getAllKeys()
