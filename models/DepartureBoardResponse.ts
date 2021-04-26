@@ -2,7 +2,7 @@ import type { ITrainService } from './TrainService'
 import type { INRCCMessage } from './NRCCMessage'
 
 export interface IDepartureBoardResponse {
-  trainServices: ITrainService[]
+  trainServices: ITrainService[] | null
   busServices: null
   ferryServices: null
 
