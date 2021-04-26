@@ -1,13 +1,13 @@
-import { atom } from "recoil";
-import { StationPair } from "../types";
+import { atom } from 'recoil'
+import { StationPair } from '../types'
 
 export const liveTrainsStationSelectAtom = atom<{
-  filter: string;
-  selected: StationPair | null;
+  filter: string
+  selected: StationPair | null
 }>({
-  key: "liveTrainsStationSelect",
+  key: 'liveTrainsStationSelect',
   default: {
-    filter: "",
+    filter: '',
     selected: null,
   },
-});
+})

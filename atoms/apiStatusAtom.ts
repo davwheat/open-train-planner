@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom } from 'recoil'
 
 interface APIStatus {
   /**
@@ -6,13 +6,13 @@ interface APIStatus {
    *
    * Default: `null`
    */
-  isDown: boolean | null;
+  isDown: boolean | null
   /**
    * Is the downtime known about?
    *
    * Default: `null`
    */
-  isKnownDown: boolean | null;
+  isKnownDown: boolean | null
 }
 
 /**
@@ -21,15 +21,15 @@ interface APIStatus {
  * - `huxley2`: self-hosted National Rail API proxy
  */
 interface FullAPIStatus {
-  huxley2: APIStatus;
+  huxley2: APIStatus
 }
 
 export const apiStatusAtom = atom<FullAPIStatus>({
-  key: "apiStatus",
+  key: 'apiStatus',
   default: {
     huxley2: {
       isDown: null,
       isKnownDown: null,
     },
   },
-});
+})

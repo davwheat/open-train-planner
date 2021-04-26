@@ -4,27 +4,27 @@
  */
 
 export type RootStackParamList = {
-  Root: undefined;
-  NotFound: undefined;
-};
+  Root: undefined
+  NotFound: undefined
+}
 
 export type BottomTabParamList = {
-  Welcome: undefined;
-  "Live Trains": undefined;
-  "Train Planner": undefined;
-};
+  Welcome: undefined
+  'Live Trains': undefined
+  'Train Planner': undefined
+}
 
 export type WelcomeParamList = {
-  Welcome: undefined;
-};
+  Welcome: undefined
+}
 
 export type LiveTrainsParamList = {
-  "Live Trains": undefined;
-};
+  'Live Trains': undefined
+}
 
 export type TrainPlannerParamList = {
-  "Train Planner": undefined;
-};
+  'Train Planner': undefined
+}
 
 // ------------------------------
 
@@ -32,25 +32,25 @@ export type StationPair = {
   /**
    * Station name.
    */
-  stationName: string;
+  stationName: string
   /**
    * Station CRS code.
    */
-  crsCode: string;
-};
+  crsCode: string
+}
 
 export interface StationsListInStorage {
   /**
    * Date that the stations list was last updated.
    */
-  lastUpdated: number;
+  lastUpdated: number
   /**
    * The stations list.
    */
-  data: StationPair[];
+  data: StationPair[]
 }
 
 export type ThemeProps = {
-  lightColor?: string;
-  darkColor?: string;
-};
+  lightColor?: string
+  darkColor?: string
+}

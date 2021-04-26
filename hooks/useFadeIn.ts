@@ -1,11 +1,11 @@
-import { useEffect, useRef } from "react";
-import { Animated } from "react-native";
+import { useEffect, useRef } from 'react'
+import { Animated } from 'react-native'
 
 export default function useFadeIn() {
-  const opacityRef = useRef<Animated.Value | undefined>(undefined);
+  const opacityRef = useRef<Animated.Value | undefined>(undefined)
 
-  if (typeof opacityRef.current === "undefined") {
-    opacityRef.current = new Animated.Value(0);
+  if (typeof opacityRef.current === 'undefined') {
+    opacityRef.current = new Animated.Value(0)
   }
 
   useEffect(() => {
@@ -13,17 +13,17 @@ export default function useFadeIn() {
       toValue: 1,
       duration: 300,
       useNativeDriver: true,
-    }).start();
-  }, []);
+    }).start()
+  }, [])
 
   const restartAnimation = () => {
-    opacityRef.current?.setValue(0);
+    opacityRef.current?.setValue(0)
     Animated.timing(opacityRef.current as Animated.Value, {
       toValue: 1,
       duration: 300,
       useNativeDriver: true,
-    }).start();
-  };
+    }).start()
+  }
 
-  return [opacityRef.current, restartAnimation] as const;
+  return [opacityRef.current, restartAnimation] as const
 }

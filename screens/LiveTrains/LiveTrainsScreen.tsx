@@ -1,58 +1,55 @@
-import { useFocusEffect, useIsFocused } from "@react-navigation/core";
-import * as React from "react";
-import { StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { useFocusEffect, useIsFocused } from '@react-navigation/core'
+import * as React from 'react'
+import { StyleSheet } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 
-import { View } from "../../components/Themed";
-import { Headline } from "../../components/Typography";
-import useFadeIn from "../../hooks/useFadeIn";
+import { View } from '../../components/Themed'
+import { Headline } from '../../components/Typography'
+import useFadeIn from '../../hooks/useFadeIn'
 
-import StationSelectBox from "../../components/StationSelectBox";
-import { liveTrainsStationSelectAtom } from "../../atoms";
+import StationSelectBox from '../../components/StationSelectBox'
+import { liveTrainsStationSelectAtom } from '../../atoms'
 
 export default function LiveTrainsScreen() {
-  const [opacity, restartAnimation] = useFadeIn();
-  const isFocused = useIsFocused();
+  const [opacity, restartAnimation] = useFadeIn()
+  const isFocused = useIsFocused()
 
   useFocusEffect(
     React.useCallback(() => {
-      restartAnimation();
-    }, [restartAnimation])
-  );
+      restartAnimation()
+    }, [restartAnimation]),
+  )
 
   return (
     <ScrollView>
       <View style={styles.container} fadeInOpacity={opacity}>
         <Headline>Select station</Headline>
-        <StationSelectBox
-          visible={isFocused}
-          atom={liveTrainsStationSelectAtom}
-        />
+        <StationSelectBox visible={isFocused} atom={liveTrainsStationSelectAtom} />
       </View>
     </ScrollView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     padding: 16,
-    width: "100%",
+    width: '100%',
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: "80%",
+    width: '80%',
   },
   getStartedText: {
     fontSize: 17,
     lineHeight: 24,
-    textAlign: "center",
-    maxWidth: "75%",
+    textAlign: 'center',
+    maxWidth: '75%',
   },
-});
+})

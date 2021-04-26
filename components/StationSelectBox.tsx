@@ -1,91 +1,71 @@
-import React, { useRef } from "react";
-import { RecoilState, useRecoilState, useRecoilValue } from "recoil";
-import { StyleSheet, View } from "react-native";
-import { Modalize } from "react-native-modalize";
-import { Portal } from "react-native-portalize";
-import { TouchableHighlight } from "react-native-gesture-handler";
-import Fuse from "fuse.js";
+import React, { useRef } from 'react'
+import { RecoilState, useRecoilState, useRecoilValue } from 'recoil'
+import { StyleSheet, View } from 'react-native'
+import { Modalize } from 'react-native-modalize'
+import { Portal } from 'react-native-portalize'
+import { TouchableHighlight } from 'react-native-gesture-handler'
+import Fuse from 'fuse.js'
 
-import { TextArea } from "native-base";
+import { TextArea } from 'native-base'
 
-import { stationsListAtom } from "../atoms";
-import type { StationPair, ThemeProps } from "../types";
-import { Text, useThemeColor } from "./Themed";
-import { Headline } from "./Typography";
-import useKeyboardState from "../hooks/useKeyboardState";
-import FakeSelectDropdown from "./FakeSelectDropdown";
+import { stationsListAtom } from '../atoms'
+import type { StationPair, ThemeProps } from '../types'
+import { Text, useThemeColor } from './Themed'
+import { Headline } from './Typography'
+import useKeyboardState from '../hooks/useKeyboardState'
+import FakeSelectDropdown from './FakeSelectDropdown'
 
 interface Props {
-  visible: boolean;
+  visible: boolean
   atom: RecoilState<{
-    filter: string;
-    selected: StationPair | null;
-  }>;
+    filter: string
+    selected: StationPair | null
+  }>
 }
 
 interface ItemProps {
-  stationName: string;
-  crsCode: string;
-  atom: Props["atom"];
+  stationName: string
+  crsCode: string
+  atom: Props['atom']
 }
 
-const StationSelectBox: React.FC<Props & ThemeProps> = ({
-  visible,
-  lightColor,
-  darkColor,
-  atom,
-}) => {
-  const stationsList = useRecoilValue(stationsListAtom);
-  const stationSelectFilter = useRecoilValue(atom);
+const StationSelectBox: React.FC<Props & ThemeProps> = ({ visible, lightColor, darkColor, atom }) => {
+  const stationsList = useRecoilValue(stationsListAtom)
+  const stationSelectFilter = useRecoilValue(atom)
 
-  const modalRef = useRef<Modalize>(null);
+  const modalRef = useRef<Modalize>(null)
 
-  const backgroundColor = useThemeColor(
-    { light: lightColor, dark: darkColor },
-    "raisedBackground"
-  );
+  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raisedBackground')
 
   const onOpen = () => {
-    modalRef.current?.open();
-  };
+    modalRef.current?.open()
+  }
 
-  const keyboardState = useKeyboardState();
-  if (keyboardState) modalRef.current?.open("top");
+  const keyboardState = useKeyboardState()
+  if (keyboardState) modalRef.current?.open('top')
 
   if (!visible) {
-    return null;
+    return null
   }
 
   const fuse = new Fuse(stationsList.data || [], {
-    keys: ["stationName", "crsCode"],
-  });
+    keys: ['stationName', 'crsCode'],
+  })
 
-  const data =
-    stationSelectFilter.filter.length > 0
-      ? fuse.search(stationSelectFilter.filter).map((result) => result.item)
-      : stationsList.data;
+  const data = stationSelectFilter.filter.length > 0 ? fuse.search(stationSelectFilter.filter).map(result => result.item) : stationsList.data
 
-  const Item: React.FC<ItemProps & ThemeProps> = ({
-    stationName,
-    crsCode,
-    lightColor,
-    darkColor,
-    atom,
-  }) => {
-    const borderColor = useThemeColor(
-      { light: lightColor, dark: darkColor },
-      "border"
-    );
-    const [stationSelectFilter, setStationSelectFilter] = useRecoilState(atom);
+  const Item: React.FC<ItemProps & ThemeProps> = ({ stationName, crsCode, lightColor, darkColor, atom }) => {
+    const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'border')
+    const [stationSelectFilter, setStationSelectFilter] = useRecoilState(atom)
 
     return (
       <TouchableHighlight
         onPress={() => {
-          modalRef.current?.close();
+          modalRef.current?.close()
           setStationSelectFilter({
             selected: { stationName, crsCode },
             filter: stationSelectFilter.filter,
-          });
+          })
         }}
       >
         <View style={[styles.item, { borderTopColor: borderColor }]}>
@@ -93,18 +73,14 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({
           <Text style={styles.subtitle}>{crsCode}</Text>
         </View>
       </TouchableHighlight>
-    );
-  };
+    )
+  }
 
-  const MemoisedItem = React.memo(Item);
+  const MemoisedItem = React.memo(Item)
 
   return (
     <>
-      <FakeSelectDropdown
-        value={stationSelectFilter.selected?.stationName}
-        placeholder="Select station"
-        onPress={onOpen}
-      />
+      <FakeSelectDropdown value={stationSelectFilter.selected?.stationName} placeholder="Select station" onPress={onOpen} />
       <Portal>
         <Modalize
           modalStyle={[styles.root, { backgroundColor: backgroundColor }]}
@@ -118,24 +94,18 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({
             windowSize: 21,
             data,
             renderItem: ({ item }) => {
-              return (
-                <MemoisedItem
-                  atom={atom}
-                  stationName={item.stationName}
-                  crsCode={item.crsCode}
-                />
-              );
+              return <MemoisedItem atom={atom} stationName={item.stationName} crsCode={item.crsCode} />
             },
-            keyExtractor: (item) => item.crsCode,
+            keyExtractor: item => item.crsCode,
           }}
         />
       </Portal>
     </>
-  );
-};
+  )
+}
 
-const Header: React.FC<{ atom: Props["atom"] }> = ({ atom }) => {
-  const [stationSelectFilter, setStationSelectFilter] = useRecoilState(atom);
+const Header: React.FC<{ atom: Props['atom'] }> = ({ atom }) => {
+  const [stationSelectFilter, setStationSelectFilter] = useRecoilState(atom)
 
   return (
     <View style={[styles.header]}>
@@ -144,28 +114,28 @@ const Header: React.FC<{ atom: Props["atom"] }> = ({ atom }) => {
         style={styles.textField}
         placeholder="Search..."
         value={stationSelectFilter.filter}
-        onChange={(e) => {
+        onChange={e => {
           setStationSelectFilter({
             filter: e.nativeEvent.text,
             selected: stationSelectFilter.selected,
-          });
+          })
         }}
       />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   root: {
     zIndex: 5,
 
-    marginTop: "auto",
+    marginTop: 'auto',
 
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
@@ -183,7 +153,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   title: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 16,
   },
   subtitle: {
@@ -192,6 +162,6 @@ const styles = StyleSheet.create({
   textField: {
     marginTop: 8,
   },
-});
+})
 
-export default StationSelectBox;
+export default StationSelectBox
