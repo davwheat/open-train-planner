@@ -1,10 +1,10 @@
 const tintColorLight = '#2f95dc'
 const tintColorDark = '#fff'
-const primary = '#008dde'
+export const primaryColor = '#008dde'
 
 export default {
   light: {
-    primary,
+    primary: primaryColor,
     text: '#000',
     background: '#fff',
     tint: tintColorLight,
@@ -14,7 +14,7 @@ export default {
     border: tintColorLight,
   },
   dark: {
-    primary,
+    primary: primaryColor,
     text: '#fff',
     background: '#000',
     tint: tintColorDark,
