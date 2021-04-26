@@ -9,15 +9,18 @@ interface Props {
   value?: string
   placeholder: string
   onPress: ((event: GestureResponderEvent) => void) & (() => void)
+  disabled?: boolean
 }
 
-const FakeSelectDropdown: React.FC<Props & ThemeProps> = ({ value, placeholder, onPress, darkColor, lightColor }) => {
+const FakeSelectDropdown: React.FC<Props & ThemeProps> = ({ value, placeholder, onPress, darkColor, lightColor, disabled }) => {
   const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'border')
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raisedBackground')
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text')
 
+  const customStyle = { borderColor, backgroundColor }
+
   return (
-    <TouchableHighlight onPress={onPress} containerStyle={styles.containerRoot} style={[styles.root, { borderColor, backgroundColor }]}>
+    <TouchableHighlight disabled={disabled} onPress={onPress} containerStyle={styles.containerRoot} style={[styles.root, customStyle]}>
       <View style={styles.select}>
         <Text style={styles.text}>{value ? value : placeholder}</Text>
         <Ionicons name="ios-chevron-down-outline" size={18} color={color} />
@@ -38,7 +41,6 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     marginTop: 16,
-    marginBottom: 16,
   },
   select: {
     display: 'flex',
