@@ -1,0 +1,69 @@
+{
+  "name": "open-train-planner",
+  "version": "0.1.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "icon": "./assets/images/adaptive-icon.png",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "test": "jest --watchAll"
+  },
+  "license": "MPL-1.0",
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "android": {
+    "package": "dev.davwheat.opentrainplanner",
+    "versionCode": 1
+  },
+  "ios": {
+    "bundleIdentifier": "dev.davwheat.opentrainplanner",
+    "buildNumber": "0.1.0"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^12.0.4",
+    "@react-native-async-storage/async-storage": "^1.13.0",
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-native-community/netinfo": "6.0.0",
+    "@react-native-picker/picker": "^1.9.11",
+    "@react-navigation/bottom-tabs": "5.11.10",
+    "@react-navigation/native": "~5.9.4",
+    "@react-navigation/stack": "~5.14.4",
+    "expo": "~41.0.1",
+    "expo-asset": "~8.3.2",
+    "expo-constants": "~10.1.3",
+    "expo-font": "~9.1.0",
+    "expo-linking": "~2.2.3",
+    "expo-splash-screen": "~0.10.2",
+    "expo-status-bar": "~1.0.4",
+    "expo-web-browser": "~9.1.0",
+    "fuse.js": "^6.4.6",
+    "native-base": "^3.0.0-next.36",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
+    "react-native-gesture-handler": "~1.10.3",
+    "react-native-modalize": "^2.0.8",
+    "react-native-portalize": "^1.0.7",
+    "react-native-reanimated": "~2.1.0",
+    "react-native-safe-area-context": "^3.2.0",
+    "react-native-screens": "~3.0.0",
+    "react-native-sectioned-multi-select": "^0.8.1",
+    "react-native-svg": "12.1.0",
+    "react-native-web": "~0.16.1",
+    "recoil": "^0.2.0",
+    "styled-components": "^5.2.3",
+    "styled-system": "^5.1.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@types/react": "~16.14.5",
+    "@types/react-native": "~0.63.52",
+    "jest-expo": "~41.0.0",
+    "typescript": "^4.2.4"
+  }
+}
