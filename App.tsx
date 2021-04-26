@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar'
 import React, { useCallback, useEffect } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import NetInfo, { useNetInfo } from '@react-native-community/netinfo'
+import { useNetInfo } from '@react-native-community/netinfo'
 import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil'
 import { NativeBaseProvider, extendTheme } from 'native-base'
 
@@ -12,9 +12,9 @@ import GenerateHuxley2Url from './api/GenerateHuxley2Url'
 import useCachedResources from './hooks/useCachedResources'
 import useColorScheme from './hooks/useColorScheme'
 import Navigation from './navigation'
-import { stationsListAtom, apiStatusAtom } from './atoms'
-import { Host } from 'react-native-portalize'
+import { stationsListAtom } from './atoms'
 import { StationPair, StationsListInStorage } from './types'
+import { primaryColor } from './constants/Colors'
 
 export default function App() {
   const theme = extendTheme({
