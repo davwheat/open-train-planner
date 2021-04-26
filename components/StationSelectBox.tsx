@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
-import { RecoilState, useRecoilState, useRecoilValue } from 'recoil'
-import { StyleSheet, View } from 'react-native'
+import React, { useCallback, useMemo, useRef } from 'react'
+import { RecoilState, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { Animated, FlatListProps, ListRenderItem, StyleSheet, View } from 'react-native'
 import { Modalize } from 'react-native-modalize'
 import { Portal } from 'react-native-portalize'
 import { TouchableHighlight } from 'react-native-gesture-handler'
@@ -16,11 +16,11 @@ import useKeyboardState from '../hooks/useKeyboardState'
 import FakeSelectDropdown from './FakeSelectDropdown'
 
 interface Props {
-  visible: boolean
   atom: RecoilState<{
     filter: string
     selected: StationPair | null
   }>
+  disabled: boolean
 }
 
 interface ItemProps {
@@ -29,7 +29,7 @@ interface ItemProps {
   atom: Props['atom']
 }
 
-const StationSelectBox: React.FC<Props & ThemeProps> = ({ visible, lightColor, darkColor, atom }) => {
+const StationSelectBox: React.FC<Props & ThemeProps> = ({ lightColor, darkColor, atom, disabled = false }) => {
   const stationsList = useRecoilValue(stationsListAtom)
   const stationSelectFilter = useRecoilValue(atom)
 
@@ -41,34 +41,41 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({ visible, lightColor, d
     modalRef.current?.open()
   }
 
+  if (disabled) {
+    modalRef.current?.close()
+  }
+
   const keyboardState = useKeyboardState()
   if (keyboardState) modalRef.current?.open('top')
 
-  if (!visible) {
-    return null
-  }
-
   const fuse = new Fuse(stationsList.data || [], {
+    minMatchCharLength: 2,
+    location: 0,
+    threshold: 0.4,
+    distance: 10,
     keys: ['stationName', 'crsCode'],
   })
 
-  const data = stationSelectFilter.filter.length > 0 ? fuse.search(stationSelectFilter.filter).map(result => result.item) : stationsList.data
+  const data = fuse.search(stationSelectFilter.filter).map(result => result.item)
 
   const Item: React.FC<ItemProps & ThemeProps> = ({ stationName, crsCode, lightColor, darkColor, atom }) => {
-    const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'border')
-    const [stationSelectFilter, setStationSelectFilter] = useRecoilState(atom)
+    const borderStyle = { borderTopColor: useThemeColor({ light: lightColor, dark: darkColor }, 'border') }
+    const setStationSelectFilter = useSetRecoilState(atom)
+
+    const onPress = useCallback(() => {
+      modalRef.current?.close()
+
+      if (stationSelectFilter.selected?.crsCode !== crsCode) {
+        setStationSelectFilter(old => ({
+          selected: { stationName, crsCode },
+          filter: old.filter,
+        }))
+      }
+    }, [setStationSelectFilter])
 
     return (
-      <TouchableHighlight
-        onPress={() => {
-          modalRef.current?.close()
-          setStationSelectFilter({
-            selected: { stationName, crsCode },
-            filter: stationSelectFilter.filter,
-          })
-        }}
-      >
-        <View style={[styles.item, { borderTopColor: borderColor }]}>
+      <TouchableHighlight onPress={onPress}>
+        <View style={[styles.item, borderStyle]}>
           <Text style={styles.title}>{stationName}</Text>
           <Text style={styles.subtitle}>{crsCode}</Text>
         </View>
@@ -78,27 +85,28 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({ visible, lightColor, d
 
   const MemoisedItem = React.memo(Item)
 
+  const customModalStyle = [styles.root, { backgroundColor: backgroundColor }]
+  const headerComponent = <Header atom={atom} />
+
+  const firstTen = data?.slice(0, 10)
+
   return (
     <>
-      <FakeSelectDropdown value={stationSelectFilter.selected?.stationName} placeholder="Select station" onPress={onOpen} />
+      <FakeSelectDropdown disabled={disabled} value={stationSelectFilter.selected?.stationName} placeholder="Select station" onPress={onOpen} />
       <Portal>
         <Modalize
-          modalStyle={[styles.root, { backgroundColor: backgroundColor }]}
-          HeaderComponent={<Header atom={atom} />}
-          snapPoint={300}
+          modalStyle={customModalStyle}
+          HeaderComponent={headerComponent}
           ref={modalRef}
-          flatListProps={{
-            removeClippedSubviews: true,
-            maxToRenderPerBatch: 30,
-            initialNumToRender: 25,
-            windowSize: 21,
-            data,
-            renderItem: ({ item }) => {
-              return <MemoisedItem atom={atom} stationName={item.stationName} crsCode={item.crsCode} />
-            },
-            keyExtractor: item => item.crsCode,
-          }}
-        />
+          handlePosition="inside"
+          handleStyle={styles.handle}
+        >
+          <View>
+            {firstTen?.map(item => (
+              <MemoisedItem atom={atom} key={item.crsCode} stationName={item.stationName} crsCode={item.crsCode} />
+            ))}
+          </View>
+        </Modalize>
       </Portal>
     </>
   )
@@ -107,20 +115,22 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({ visible, lightColor, d
 const Header: React.FC<{ atom: Props['atom'] }> = ({ atom }) => {
   const [stationSelectFilter, setStationSelectFilter] = useRecoilState(atom)
 
+  const onChange = useCallback(
+    (e: any) => {
+      if (stationSelectFilter.filter !== e.nativeEvent.text) {
+        setStationSelectFilter({
+          filter: e.nativeEvent.text,
+          selected: stationSelectFilter.selected,
+        })
+      }
+    },
+    [setStationSelectFilter],
+  )
+
   return (
     <View style={[styles.header]}>
       <Headline>Choose station</Headline>
-      <TextArea
-        style={styles.textField}
-        placeholder="Search..."
-        value={stationSelectFilter.filter}
-        onChange={e => {
-          setStationSelectFilter({
-            filter: e.nativeEvent.text,
-            selected: stationSelectFilter.selected,
-          })
-        }}
-      />
+      <TextArea style={styles.textField} placeholder="Search..." value={stationSelectFilter.filter} onChange={onChange} />
     </View>
   )
 }
@@ -140,8 +150,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 12,
 
-    elevation: 4,
-    padding: 16,
+    padding: 24,
+    paddingTop: 32,
   },
   header: {
     marginBottom: 16,
@@ -160,7 +170,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   textField: {
-    marginTop: 8,
+    marginTop: 16,
+  },
+  handle: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
 })
 
