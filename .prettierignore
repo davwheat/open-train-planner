@@ -1,0 +1,7 @@
+.vscode
+.expo
+.expo-shared
+package.json
+package-lock.json
+public
+size-plugin.json
