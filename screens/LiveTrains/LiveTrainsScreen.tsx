@@ -1,31 +1,39 @@
-import { useFocusEffect, useIsFocused } from '@react-navigation/core'
 import * as React from 'react'
 import { StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
+import { Button } from 'native-base'
 
-import { View } from '../../components/Themed'
-import { Headline } from '../../components/Typography'
-import useFadeIn from '../../hooks/useFadeIn'
+import { Text, View } from '../../components/Themed'
 
 import StationSelectBox from '../../components/StationSelectBox'
 import { liveTrainsStationSelectAtom } from '../../atoms'
+import Card from '../../components/Card'
+import FadeInView from '../../components/FadeInView'
 
 export default function LiveTrainsScreen() {
-  const [opacity, restartAnimation] = useFadeIn()
-  const isFocused = useIsFocused()
-
-  useFocusEffect(
-    React.useCallback(() => {
-      restartAnimation()
-    }, [restartAnimation]),
-  )
+  const [searchState, setSearchState] = React.useState({ loading: false, trains: null })
 
   return (
     <ScrollView>
-      <View style={styles.container} fadeInOpacity={opacity}>
-        <Headline>Select station</Headline>
-        <StationSelectBox visible={isFocused} atom={liveTrainsStationSelectAtom} />
-      </View>
+      <FadeInView>
+        <View style={styles.container}>
+          <Card>
+            <Text>Departure station</Text>
+            <StationSelectBox disabled={searchState.loading} atom={liveTrainsStationSelectAtom} />
+
+            <Button
+              isLoading={searchState.loading}
+              isLoadingText="Searching..."
+              style={styles.searchButton}
+              onPress={() => {
+                setSearchState({ loading: true, trains: null })
+              }}
+            >
+              To the trains!
+            </Button>
+          </Card>
+        </View>
+      </FadeInView>
     </ScrollView>
   )
 }
@@ -51,5 +59,8 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: 'center',
     maxWidth: '75%',
+  },
+  searchButton: {
+    marginTop: 16,
   },
 })
