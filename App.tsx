@@ -18,9 +18,23 @@ import { primaryColor } from './constants/Colors'
 
 export default function App() {
   const theme = extendTheme({
+    components: {
+      Button: {
+        defaultProps: {
+          colorScheme: 'primary',
+        },
+        baseStyle: {
+          fontSize: 18,
+        },
+      },
+    },
     config: {
-      // Changing initialColorMode to 'dark'
       initialColorMode: useColorScheme(),
+    },
+    colors: {
+      primary: {
+        400: primaryColor,
+      },
     },
   })
 
