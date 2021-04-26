@@ -3,7 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { Text, View } from "../../components/Themed";
+import { View } from "../../components/Themed";
 import { Headline } from "../../components/Typography";
 import useFadeIn from "../../hooks/useFadeIn";
 
@@ -26,7 +26,6 @@ export default function LiveTrainsScreen() {
         <Headline>Select station</Headline>
         <StationSelectBox
           visible={isFocused}
-          onSelect={(e) => console.log(e)}
           atom={liveTrainsStationSelectAtom}
         />
       </View>

@@ -16,7 +16,6 @@ import useKeyboardState from "../hooks/useKeyboardState";
 import FakeSelectDropdown from "./FakeSelectDropdown";
 
 interface Props {
-  onSelect: (items: StationPair) => void;
   visible: boolean;
   atom: RecoilState<{
     filter: string;
@@ -31,7 +30,6 @@ interface ItemProps {
 }
 
 const StationSelectBox: React.FC<Props & ThemeProps> = ({
-  onSelect,
   visible,
   lightColor,
   darkColor,
@@ -39,18 +37,8 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({
 }) => {
   const stationsList = useRecoilValue(stationsListAtom);
   const stationSelectFilter = useRecoilValue(atom);
-  const previousSelection = useRef(stationSelectFilter.selected);
 
   const modalRef = useRef<Modalize>(null);
-
-  if (
-    stationSelectFilter.selected &&
-    stationSelectFilter.selected !== previousSelection.current
-  ) {
-    onSelect && onSelect(stationSelectFilter.selected);
-    previousSelection.current = stationSelectFilter.selected;
-    modalRef.current?.close();
-  }
 
   const backgroundColor = useThemeColor(
     { light: lightColor, dark: darkColor },
@@ -92,12 +80,13 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({
 
     return (
       <TouchableHighlight
-        onPress={() =>
+        onPress={() => {
+          modalRef.current?.close();
           setStationSelectFilter({
             selected: { stationName, crsCode },
             filter: stationSelectFilter.filter,
-          })
-        }
+          });
+        }}
       >
         <View style={[styles.item, { borderTopColor: borderColor }]}>
           <Text style={styles.title}>{stationName}</Text>
