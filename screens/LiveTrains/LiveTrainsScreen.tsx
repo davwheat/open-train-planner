@@ -1,17 +1,50 @@
 import * as React from 'react'
-import { StyleSheet } from 'react-native'
+import { Alert, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button } from 'native-base'
+import { Button, View } from 'native-base'
 
-import { Text, View } from '../../components/Themed'
+import { Text } from '../../components/Themed'
 
 import StationSelectBox from '../../components/StationSelectBox'
-import { liveTrainsStationSelectAtom } from '../../atoms'
+import { liveTrains_departureStationAtom, liveTrains_departureStationFilterAtom } from '../../atoms/liveTrainsStationSelectAtom'
 import Card from '../../components/Card'
 import FadeInView from '../../components/FadeInView'
+import TrainSkeleton from '../../components/TrainDisplay/TrainSkeleton'
+import TrainItem from '../../components/TrainDisplay/TrainItem'
+
+import FetchDepartureBoard from '../../api/FetchDepartureBoard'
+import { useRecoilValue } from 'recoil'
+import { IDepartureBoardResponse } from '../../models/DepartureBoardResponse'
 
 export default function LiveTrainsScreen() {
-  const [searchState, setSearchState] = React.useState({ loading: false, trains: null })
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [trainData, setTrainData] = React.useState<{ results: null | IDepartureBoardResponse }>({ results: null })
+
+  const selectedStation = useRecoilValue(liveTrains_departureStationAtom)
+
+  const onSearchPress = React.useCallback(() => {
+    setIsLoading(true)
+    setTrainData({ results: null })
+
+    console.log(selectedStation)
+
+    if (selectedStation === null) {
+      setIsLoading(false)
+      return
+    }
+
+    FetchDepartureBoard(selectedStation.crsCode)
+      .then(data => {
+        setTrainData({ results: data })
+      })
+      .catch(e => {
+        console.error(e)
+        Alert.alert('Error', e.message, e.buttons)
+      })
+      .then(() => {
+        setIsLoading(false)
+      })
+  }, [FetchDepartureBoard, setIsLoading, selectedStation])
 
   return (
     <ScrollView>
@@ -19,19 +52,48 @@ export default function LiveTrainsScreen() {
         <View style={styles.container}>
           <Card>
             <Text>Departure station</Text>
-            <StationSelectBox disabled={searchState.loading} atom={liveTrainsStationSelectAtom} />
+            <StationSelectBox
+              disabled={isLoading}
+              selectionAtom={liveTrains_departureStationAtom}
+              filterAtom={liveTrains_departureStationFilterAtom}
+            />
 
             <Button
-              isLoading={searchState.loading}
+              isLoading={isLoading}
               isLoadingText="Searching..."
               style={styles.searchButton}
-              onPress={() => {
-                setSearchState({ loading: true, trains: null })
-              }}
+              isDisabled={selectedStation === null}
+              onPress={onSearchPress}
             >
               To the trains!
             </Button>
           </Card>
+
+          {(isLoading || trainData.results) && (
+            <Card>
+              <Text style={styles.results}>Results</Text>
+
+              {isLoading ? (
+                <View style={styles.trainList}>
+                  <TrainSkeleton />
+                  <TrainSkeleton />
+                  <TrainSkeleton />
+                  <TrainSkeleton />
+                  <TrainSkeleton />
+                </View>
+              ) : trainData.results && trainData.results.trainServices ? (
+                <View style={styles.trainList}>
+                  {trainData.results.trainServices.map(trainService => (
+                    <TrainItem key={trainService.serviceIdGuid} service={trainService} />
+                  ))}
+                </View>
+              ) : (
+                <View style={styles.trainList}>
+                  <Text>No trains available for search</Text>
+                </View>
+              )}
+            </Card>
+          )}
         </View>
       </FadeInView>
     </ScrollView>
@@ -61,6 +123,15 @@ const styles = StyleSheet.create({
     maxWidth: '75%',
   },
   searchButton: {
+    marginTop: 16,
+  },
+  results: {
+    fontWeight: 'bold',
+  },
+  trainList: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
     marginTop: 16,
   },
 })

@@ -6,7 +6,7 @@ export default function GenerateHuxley2Url(service: string, urlParams?: string[]
     i = 0
 
   if (queryParams) {
-    queryString = querystring.stringify(queryParams)
+    queryString = '?' + querystring.stringify(queryParams)
   }
 
   return `${ApiUrls.huxley2}/${service}/${urlParams ? urlParams.join('/') : ''}${queryString}`

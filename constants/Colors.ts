@@ -1,5 +1,9 @@
 const tintColorLight = '#2f95dc'
-const tintColorDark = '#fff'
+const tintColorDark = '#eee'
+
+const mutedColorLight = '#999'
+const mutedColorDark = '#999'
+
 export const primaryColor = '#008dde'
 
 export default {
@@ -12,6 +16,7 @@ export default {
     tabIconSelected: tintColorLight,
     raisedBackground: '#efefef',
     border: tintColorLight,
+    muted: mutedColorLight,
   },
   dark: {
     primary: primaryColor,
@@ -22,5 +27,6 @@ export default {
     tabIconSelected: tintColorDark,
     raisedBackground: '#111',
     border: tintColorDark,
+    muted: mutedColorDark,
   },
 }
