@@ -45,6 +45,7 @@
     "expo-web-browser": "~9.1.0",
     "fuse.js": "^6.4.6",
     "native-base": "^3.0.0-next.36",
+    "querystring": "^0.2.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
