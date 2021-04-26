@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
-  "icon": "./assets/images/adaptive-icon.png",
+  "icon": "./assets/images/icon.png",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -12,7 +12,7 @@
     "eject": "expo eject",
     "test": "jest --watchAll"
   },
-  "license": "MPL-1.0",
+  "license": "MPL-2.0",
   "jest": {
     "preset": "jest-expo"
   },

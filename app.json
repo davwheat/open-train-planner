@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "open-train-planner",
+    "name": "Open Train Planner",
     "slug": "open-train-planner",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,7 +15,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false
     },
@@ -27,6 +29,8 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": "",
+    "githubUrl": "https://github.com/davwheat/open-train-planner"
   }
 }
