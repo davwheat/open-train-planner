@@ -1,3 +1,5 @@
+import './wdyr'
+
 import { StatusBar } from 'expo-status-bar'
 import React, { useCallback, useEffect } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
