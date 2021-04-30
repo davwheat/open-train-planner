@@ -64,8 +64,6 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({ lightColor, darkColor,
     const onPress = useCallback(() => {
       modalRef.current?.close()
 
-      console.log({ stationName, crsCode })
-
       if (stationSelection?.crsCode !== crsCode) {
         setStationSelection({ stationName, crsCode })
       }
@@ -114,8 +112,6 @@ const Header: React.FC<{ filterAtom: Props['filterAtom'] }> = ({ filterAtom }) =
   const [stationSelectFilter, setStationSelectFilter] = useRecoilState(filterAtom)
 
   const onChange = (e: any) => {
-    console.log(e.nativeEvent.text)
-
     if (stationSelectFilter !== e.nativeEvent.text) {
       setStationSelectFilter(e.nativeEvent.text)
     }

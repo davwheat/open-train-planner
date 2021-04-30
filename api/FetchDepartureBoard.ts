@@ -19,8 +19,6 @@ export default async function FetchDepartureBoard(
     ? GenerateHuxley2Url('departures', [crsCode, filterType, filterCrsCode], apiRequestOptions)
     : GenerateHuxley2Url('departures', [crsCode], apiRequestOptions)
 
-  console.log(url)
-
   const netInfo = await NetInfo.fetch()
 
   if (!netInfo.isConnected) {

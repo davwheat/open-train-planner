@@ -26,8 +26,6 @@ export default function LiveTrainsScreen() {
     setIsLoading(true)
     setTrainData({ results: null })
 
-    console.log(selectedStation)
-
     if (selectedStation === null) {
       setIsLoading(false)
       return
