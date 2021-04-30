@@ -4,8 +4,11 @@ import { Center, VStack } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
 import { Text, useThemeColor } from '../Themed'
 import type { ThemeProps } from '../../types'
-import { ITrainService } from '../../models/TrainService'
-import getTimeDifference from '../../helpers/getTimeDifference'
+import type { ITrainService } from '../../models/TrainService'
+import { getTimeDifference, getTimeDifferenceText } from '../../helpers/getTimeDifference'
+import TrainFullDetailsCard from './TrainFullDetails'
+import { TouchableHighlight } from 'react-native-gesture-handler'
+import getOriginsOrDestinationsAsText from '../../helpers/getOriginsOrDestinationsAsText'
 
 const TrainItem: React.FC<ThemeProps & { service: ITrainService }> = ({ lightColor, darkColor, service }) => {
   const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
@@ -32,22 +35,25 @@ const TrainItem: React.FC<ThemeProps & { service: ITrainService }> = ({ lightCol
   const isDelayed = service.etd !== 'On time' && service.etd !== 'Cancelled' && service.etd !== service.std
 
   return (
-    <View style={[styles.root, { borderBottomColor: borderColor }]}>
+    <TouchableHighlight underlayColor={backgroundColor} onPress={onPress}>
+      <View style={styles.root}>
       <Center>
         <Text style={[styles.ogTime, service.isCancelled && styles.badTrain]}>{service.std}</Text>
       </Center>
       <VStack space={1} style={styles.trainDetails}>
         <Text style={[styles.destination, service.isCancelled && styles.badTrain]}>{destinationText}</Text>
         <Text style={[styles.extraInfo, service.isCancelled && styles.badTrain]}>{extraInfo}</Text>
-      </VStack>
-      <Center style={styles.trainTimes}>
-        <Text style={[styles.time, styles.onTime, service.isCancelled && styles.cancelled, isDelayed && styles.delayed]}>{time}</Text>
-        {!service.isCancelled && timeDifference <= 60 && <Text style={styles.timeStatus}>in {timeDifference} mins</Text>}
-      </Center>
-      <Center>
-        <Ionicons name="ios-chevron-forward-outline" size={24} color="white" />
-      </Center>
-    </View>
+        </VStack>
+        <Center style={styles.trainTimes}>
+          <Text style={[styles.time, styles.onTime, service.isCancelled && styles.cancelled, isDelayed && styles.delayed]}>{time}</Text>
+          {!service.isCancelled && timeDifference <= 60 && <Text style={styles.timeStatus}>{timeDifferenceText}</Text>}
+        </Center>
+        <Center>
+          <Ionicons name="ios-chevron-forward-outline" size={24} color={mutedColor} />
+        </Center>
+        <TrainFullDetailsCard onClose={() => setIsDetailsModalShown(false)} trainData={service} open={isDetailsModalShown} />
+      </View>
+    </TouchableHighlight>
   )
 }
 

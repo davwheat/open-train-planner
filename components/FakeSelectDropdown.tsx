@@ -14,13 +14,20 @@ interface Props {
 
 const FakeSelectDropdown: React.FC<Props & ThemeProps> = ({ value, placeholder, onPress, darkColor, lightColor, disabled }) => {
   const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'border')
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raisedBackground')
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text')
+  const raisedBackgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raisedBackground')
+  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
 
-  const customStyle = { borderColor, backgroundColor }
+  const customStyle = { borderColor, backgroundColor: raisedBackgroundColor }
 
   return (
-    <TouchableHighlight disabled={disabled} onPress={onPress} containerStyle={styles.containerRoot} style={[styles.root, customStyle]}>
+    <TouchableHighlight
+      disabled={disabled}
+      onPress={onPress}
+      containerStyle={styles.containerRoot}
+      style={[styles.root, customStyle]}
+      underlayColor={backgroundColor}
+    >
       <View style={styles.select}>
         <Text style={styles.text}>{value ? value : placeholder}</Text>
         <Ionicons name="ios-chevron-down-outline" size={18} color={color} />

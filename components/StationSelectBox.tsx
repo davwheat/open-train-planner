@@ -59,6 +59,8 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({ lightColor, darkColor,
 
   const Item: React.FC<ItemProps & ThemeProps> = ({ stationName, crsCode, lightColor, darkColor, selectionAtom }) => {
     const borderStyle = { borderTopColor: useThemeColor({ light: lightColor, dark: darkColor }, 'border') }
+    const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
+
     const setStationSelection = useSetRecoilState(selectionAtom)
 
     const onPress = useCallback(() => {
@@ -70,7 +72,7 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({ lightColor, darkColor,
     }, [setStationSelection])
 
     return (
-      <TouchableHighlight onPress={onPress}>
+      <TouchableHighlight underlayColor={backgroundColor} onPress={onPress}>
         <View style={[styles.item, borderStyle]}>
           <Text style={styles.title}>{stationName}</Text>
           <Text style={styles.subtitle}>{crsCode}</Text>
