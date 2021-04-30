@@ -25,3 +25,10 @@ export default (timeString: string): number => {
 
   return minDiff
 }
+
+/**
+ * Displays "in X mins", or "now" if the difference is <= 1 minute.
+ */
+export const getTimeDifferenceText = (difference: number): string => {
+  return difference > 1 ? `in ${difference} mins` : 'now'
+}
