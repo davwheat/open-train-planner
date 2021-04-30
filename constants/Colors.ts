@@ -2,7 +2,7 @@ const tintColorLight = '#2f95dc'
 const tintColorDark = '#eee'
 
 const mutedColorLight = '#999'
-const mutedColorDark = '#999'
+const mutedColorDark = '#bbb'
 
 export const primaryColor = '#008dde'
 
