@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Center, VStack } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
@@ -11,18 +11,10 @@ import { TouchableHighlight } from 'react-native-gesture-handler'
 import getOriginsOrDestinationsAsText from '../../helpers/getOriginsOrDestinationsAsText'
 
 const TrainItem: React.FC<ThemeProps & { service: ITrainService }> = ({ lightColor, darkColor, service }) => {
-  const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
+  const mutedColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
+  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
 
-  const destinations = service.currentDestinations || service.destination
-  const destinationText = destinations.reduce((prev, val, i) => {
-    if (i === 0) {
-      return val.locationName
-    } else if (i === destinations.length - 1) {
-      return `${prev} and ${val.locationName}`
-    } else {
-      return `${prev}, ${val.locationName}`
-    }
-  }, '')
+  const [isDetailsModalShown, setIsDetailsModalShown] = useState(false)
 
   const diffInput = (service.etd !== 'On time' && service.etd !== 'Cancelled' && service.etd !== 'Delayed' ? service.etd : service.std) as string
 
@@ -30,19 +22,40 @@ const TrainItem: React.FC<ThemeProps & { service: ITrainService }> = ({ lightCol
   const time = service.etd
   const timeDifference = getTimeDifference(diffInput)
 
-  console.log(diffInput, 'diff', timeDifference)
+  const [timeDifferenceText, setTimeDifferenceText] = useState(getTimeDifferenceText(timeDifference))
+
+  const destinations = service.currentDestinations || service.destination
+  const destinationText = getOriginsOrDestinationsAsText(destinations)
+
+  useEffect(() => {
+    const intervalKey = setInterval(() => {
+      const timeDifference = getTimeDifference(diffInput)
+      const newDiff = getTimeDifferenceText(timeDifference)
+
+      if (newDiff !== timeDifferenceText) {
+        setTimeDifferenceText(newDiff)
+      }
+    }, 20 * 1000)
+
+    return () => {
+      clearInterval(intervalKey)
+    }
+  })
 
   const isDelayed = service.etd !== 'On time' && service.etd !== 'Cancelled' && service.etd !== service.std
+
+  function onPress() {
+  }
 
   return (
     <TouchableHighlight underlayColor={backgroundColor} onPress={onPress}>
       <View style={styles.root}>
-      <Center>
-        <Text style={[styles.ogTime, service.isCancelled && styles.badTrain]}>{service.std}</Text>
-      </Center>
-      <VStack space={1} style={styles.trainDetails}>
-        <Text style={[styles.destination, service.isCancelled && styles.badTrain]}>{destinationText}</Text>
-        <Text style={[styles.extraInfo, service.isCancelled && styles.badTrain]}>{extraInfo}</Text>
+        <Center>
+          <Text style={[styles.ogTime, service.isCancelled && styles.badTrain]}>{service.std}</Text>
+        </Center>
+        <VStack space={1} style={styles.trainDetails}>
+          <Text style={[styles.destination, service.isCancelled && styles.badTrain]}>{destinationText}</Text>
+          <Text style={[styles.extraInfo, service.isCancelled && styles.badTrain]}>{extraInfo}</Text>
         </VStack>
         <Center style={styles.trainTimes}>
           <Text style={[styles.time, styles.onTime, service.isCancelled && styles.cancelled, isDelayed && styles.delayed]}>{time}</Text>
