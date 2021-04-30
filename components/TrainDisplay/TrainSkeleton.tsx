@@ -4,18 +4,21 @@ import { Center, Skeleton, VStack } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
 import { useThemeColor } from '../Themed'
 import type { ThemeProps } from '../../types'
+import useColorScheme from '../../hooks/useColorScheme'
 
 const TrainSkeleton: React.FC<ThemeProps> = ({ lightColor, darkColor }) => {
-  const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
+  const mutedColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
+
+  const colorScheme = useColorScheme()
 
   const skeletonProps = {
     style: styles.skeleton,
-    startColor: '#222',
-    endColor: borderColor,
+    startColor: colorScheme === 'dark' ? '#222' : '#ddd',
+    endColor: mutedColor,
   }
 
   return (
-    <View style={[styles.root, { borderBottomColor: borderColor }]}>
+    <View style={[styles.root, { borderBottomColor: mutedColor }]}>
       <VStack space={1} style={styles.trainDetails}>
         <Skeleton variant="text" height="20px" {...skeletonProps} />
         <Skeleton variant="text" height="14px" {...skeletonProps} />
@@ -25,7 +28,7 @@ const TrainSkeleton: React.FC<ThemeProps> = ({ lightColor, darkColor }) => {
         <Skeleton variant="text" height="12px" {...skeletonProps} />
       </VStack>
       <Center>
-        <Ionicons name="ios-chevron-forward-outline" size={24} color="white" />
+        <Ionicons name="ios-chevron-forward-outline" size={24} color={mutedColor} />
       </Center>
     </View>
   )
