@@ -5,7 +5,7 @@ import timezone from 'dayjs/plugin/timezone'
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-export default (timeString: string): number => {
+export const getTimeDifference = (timeString: string): number => {
   const split = timeString.split(':')
 
   const now = dayjs().tz('Europe/London')
