@@ -34,6 +34,7 @@ export default function App() {
     colors: {
       primary: {
         400: primaryColor,
+        500: primaryColor,
       },
     },
   })
