@@ -45,6 +45,7 @@ const TrainItem: React.FC<ThemeProps & { service: ITrainService }> = ({ lightCol
   const isDelayed = service.etd !== 'On time' && service.etd !== 'Cancelled' && service.etd !== service.std
 
   function onPress() {
+    setIsDetailsModalShown(true)
   }
 
   return (
