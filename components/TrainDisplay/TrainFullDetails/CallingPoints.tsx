@@ -1,5 +1,7 @@
-import { VStack } from 'native-base'
 import React from 'react'
+
+import { VStack } from 'native-base'
+import { View } from 'react-native'
 
 import type { ICallingPoint } from '../../../models/CallingPoint'
 

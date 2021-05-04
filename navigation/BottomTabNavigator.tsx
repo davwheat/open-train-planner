@@ -10,9 +10,9 @@ import * as React from 'react'
 
 import Colors from '../constants/Colors'
 import useColorScheme from '../hooks/useColorScheme'
-import { BottomTabParamList, WelcomeParamList, LiveTrainsParamList, TrainPlannerParamList } from '../types'
+import { BottomTabParamList, HomeParamList, LiveTrainsParamList, TrainPlannerParamList } from '../types'
 
-import WelcomeScreen from '../screens/WelcomeScreen'
+import WelcomeScreen from '../screens/HomeScreen'
 import LiveTrainsScreen from '../screens/LiveTrains/LiveTrainsScreen'
 import TrainPlannerScreen from '../screens/TrainPlannerScreen'
 import { Host } from 'react-native-portalize'
@@ -24,9 +24,9 @@ export default function BottomTabNavigator() {
 
   return (
     <Host>
-      <BottomTab.Navigator initialRouteName="Welcome" tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      <BottomTab.Navigator initialRouteName="Home" tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
         <BottomTab.Screen
-          name="Welcome"
+          name="Home"
           component={WelcomeNavigator}
           options={{
             tabBarIcon: ({ color }) => <TabBarIcon name="ios-home-outline" color={color} />,
@@ -60,12 +60,12 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const WelcomeStack = createStackNavigator<WelcomeParamList>()
+const WelcomeStack = createStackNavigator<HomeParamList>()
 
 function WelcomeNavigator() {
   return (
     <WelcomeStack.Navigator>
-      <WelcomeStack.Screen name="Welcome" component={WelcomeScreen} options={{ headerTitle: 'Welcome' }} />
+      <WelcomeStack.Screen name="Home" component={WelcomeScreen} options={{ headerTitle: 'Home' }} />
     </WelcomeStack.Navigator>
   )
 }

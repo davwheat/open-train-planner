@@ -9,13 +9,13 @@ export type RootStackParamList = {
 }
 
 export type BottomTabParamList = {
-  Welcome: undefined
+  Home: undefined
   'Live Trains': undefined
   'Train Planner': undefined
 }
 
-export type WelcomeParamList = {
-  Welcome: undefined
+export type HomeParamList = {
+  Home: undefined
 }
 
 export type LiveTrainsParamList = {

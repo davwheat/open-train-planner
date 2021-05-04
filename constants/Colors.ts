@@ -10,11 +10,12 @@ export default {
   light: {
     primary: primaryColor,
     text: '#000',
-    background: '#fff',
+    background:
+      '#f2f2f2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ',
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
-    raisedBackground: '#efefef',
+    raisedBackground: '#fff',
     border: tintColorLight,
     muted: mutedColorLight,
   },

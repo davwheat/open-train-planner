@@ -113,11 +113,14 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({ lightColor, darkColor,
 const Header: React.FC<{ filterAtom: Props['filterAtom'] }> = ({ filterAtom }) => {
   const [stationSelectFilter, setStationSelectFilter] = useRecoilState(filterAtom)
 
-  const onChange = (e: any) => {
-    if (stationSelectFilter !== e.nativeEvent.text) {
-      setStationSelectFilter(e.nativeEvent.text)
-    }
-  }
+  const onChange = useCallback(
+    function (e: any) {
+      if (stationSelectFilter !== e.nativeEvent.text) {
+        setStationSelectFilter(e.nativeEvent.text)
+      }
+    },
+    [stationSelectFilter, setStationSelectFilter],
+  )
 
   return (
     <View style={[styles.header]}>

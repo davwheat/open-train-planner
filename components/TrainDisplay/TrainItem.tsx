@@ -50,7 +50,7 @@ const TrainItem: React.FC<ThemeProps & { service: ITrainService }> = ({ lightCol
 
   return (
     <TouchableHighlight underlayColor={backgroundColor} onPress={onPress}>
-      <View style={styles.root}>
+      <View style={[styles.root, { borderBottomColor: mutedColor }]}>
         <Center>
           <Text style={[styles.ogTime, service.isCancelled && styles.badTrain]}>{service.std}</Text>
         </Center>

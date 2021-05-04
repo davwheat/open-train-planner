@@ -1,3 +1,6 @@
+import type { ITrainFormation } from './TrainFormation'
+import type { AdhocAlerts } from './TrainService'
+
 export interface ICallingPoint {
   locationName: string
 

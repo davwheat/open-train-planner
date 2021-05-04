@@ -8,17 +8,18 @@ dayjs.extend(timezone)
 export const getTimeDifference = (timeString: string): number => {
   const split = timeString.split(':')
 
-  const now = dayjs().tz('Europe/London')
+  let now = dayjs().tz('Europe/London')
+  now = now.set('hour', 23).set('minute', 59)
   const nowHours = now.get('hours')
 
   const hours = parseInt(split[0])
   const mins = parseInt(split[1])
-  const input = now.clone().set('minutes', mins).set('hours', hours)
+  let input = now.clone().set('minutes', mins).set('hours', hours)
 
   const hoursDiff = hours - nowHours
 
-  if (hoursDiff === -23) {
-    input.add(1, 'day')
+  if (hoursDiff === -23 || hoursDiff === -22) {
+    input = input.add(1, 'day')
   }
 
   const minDiff = input.diff(now, 'minutes')
