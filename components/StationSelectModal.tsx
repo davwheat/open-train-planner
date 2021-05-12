@@ -13,33 +13,44 @@ import type { StationPair, ThemeProps } from '../types'
 import { Text, useThemeColor } from './Themed'
 import { Headline } from './Typography'
 import useKeyboardState from '../hooks/useKeyboardState'
-import FakeSelectDropdown from './FakeSelectDropdown'
-import StationSelectModal from './StationSelectModal'
 
 interface Props {
-  selectionAtom: RecoilState<StationPair | null>
+  onSelectStation: (station: StationPair) => void
   filterAtom: RecoilState<string>
-  disabled: boolean
+  disabled?: boolean
+  open?: boolean
 }
 
 interface ItemProps {
   stationName: string
   crsCode: string
-  selectionAtom: Props['selectionAtom']
 }
 
-const StationSelectBox: React.FC<Props & ThemeProps> = ({ lightColor, darkColor, selectionAtom, filterAtom, disabled = false }) => {
+const StationSelectModal: React.FC<Props & ThemeProps> = ({
+  lightColor,
+  darkColor,
+  onSelectStation,
+  filterAtom,
+  disabled = false,
+  open = true,
+}) => {
   const stationsList = useRecoilValue(stationsListAtom)
   const stationFilter = useRecoilValue(filterAtom)
-  const stationSelection = useRecoilValue(selectionAtom)
 
   const modalRef = useRef<Modalize>(null)
+  const wasOpen = useRef<boolean | null>(null)
 
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raisedBackground')
 
   const onOpen = () => {
     modalRef.current?.open()
   }
+
+  if (open && !wasOpen.current) {
+    onOpen()
+  }
+
+  if (wasOpen.current === null) wasOpen.current = open
 
   if (disabled) {
     modalRef.current?.close()
@@ -58,19 +69,14 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({ lightColor, darkColor,
 
   const data = fuse.search(stationFilter).map(result => result.item)
 
-  const Item: React.FC<ItemProps & ThemeProps> = ({ stationName, crsCode, lightColor, darkColor, selectionAtom }) => {
+  const Item: React.FC<ItemProps & ThemeProps> = ({ stationName, crsCode, lightColor, darkColor }) => {
     const borderStyle = { borderTopColor: useThemeColor({ light: lightColor, dark: darkColor }, 'border') }
     const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
 
-    const setStationSelection = useSetRecoilState(selectionAtom)
-
     const onPress = useCallback(() => {
       modalRef.current?.close()
-
-      if (stationSelection?.crsCode !== crsCode) {
-        setStationSelection({ stationName, crsCode })
-      }
-    }, [setStationSelection])
+      onSelectStation({ stationName, crsCode })
+    }, [onSelectStation, modalRef])
 
     return (
       <TouchableHighlight underlayColor={backgroundColor} onPress={onPress}>
@@ -90,10 +96,21 @@ const StationSelectBox: React.FC<Props & ThemeProps> = ({ lightColor, darkColor,
   const firstTen = data?.slice(0, 10)
 
   return (
-    <>
-      <FakeSelectDropdown disabled={disabled} value={stationSelection?.stationName} placeholder="Select station" onPress={onOpen} />
-      <StationSelectModal filterAtom={filterAtom} selectionAtom={selectionAtom} disabled={disabled} />
-    </>
+    <Portal>
+      <Modalize
+        modalStyle={customModalStyle}
+        HeaderComponent={headerComponent}
+        ref={modalRef}
+        handlePosition="inside"
+        handleStyle={styles.handle}
+      >
+        <View>
+          {firstTen?.map(item => (
+            <MemoisedItem key={item.crsCode} stationName={item.stationName} crsCode={item.crsCode} />
+          ))}
+        </View>
+      </Modalize>
+    </Portal>
   )
 }
 
@@ -159,4 +176,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default StationSelectBox
+export default StationSelectModal

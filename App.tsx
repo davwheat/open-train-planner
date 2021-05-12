@@ -59,6 +59,8 @@ function InnerApp() {
   const stationsList = useRecoilValue(stationsListAtom)
   // const [apiStatus, setApiStatus] = useRecoilState(apiStatusAtom);
 
+  console.log(isLoadingComplete, stationsList.loaded)
+
   if (!isLoadingComplete || !stationsList.loaded) {
     return (
       <SafeAreaProvider>

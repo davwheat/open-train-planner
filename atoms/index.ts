@@ -1,3 +1,3 @@
 export { apiStatusAtom } from './apiStatusAtom'
 export { stationsListAtom } from './stationsListAtom'
-export { favouriteStationsAtom } from './favouriteStationsAtom'
+export { favouriteStationsAtom, favouriteStationsFilterAtom } from './favouriteStationsAtom'
