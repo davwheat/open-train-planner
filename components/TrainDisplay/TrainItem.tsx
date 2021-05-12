@@ -4,45 +4,35 @@ import { Center, VStack } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
 import { Text, useThemeColor } from '../Themed'
 import type { ThemeProps } from '../../types'
-import type { ITrainService } from '../../models/TrainService'
-import { getTimeDifference, getTimeDifferenceText } from '../../helpers/getTimeDifference'
 import TrainFullDetailsCard from './TrainFullDetails'
 import { TouchableHighlight } from 'react-native-gesture-handler'
-import getOriginsOrDestinationsAsText from '../../helpers/getOriginsOrDestinationsAsText'
+import { TrainService } from '../../models/TrainService'
 
-const TrainItem: React.FC<ThemeProps & { service: ITrainService }> = ({ lightColor, darkColor, service }) => {
+const TrainItem: React.FC<ThemeProps & { service: TrainService }> = ({ lightColor, darkColor, service }) => {
   const mutedColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
 
   const [isDetailsModalShown, setIsDetailsModalShown] = useState(false)
 
-  const diffInput = (service.etd !== 'On time' && service.etd !== 'Cancelled' && service.etd !== 'Delayed' ? service.etd : service.std) as string
+  const extraInfo = `${service.data.operator}`
+  const departureTimeString = service.estimatedTimeOfDeparture
+  const timeDifference = service.getTimeDifference()
 
-  const extraInfo = `${service.operator}`
-  const time = service.etd
-  const timeDifference = getTimeDifference(diffInput)
+  const [timeDifferenceText, setTimeDifferenceText] = useState(service.getTimeDifferenceString())
 
-  const [timeDifferenceText, setTimeDifferenceText] = useState(getTimeDifferenceText(timeDifference))
-
-  const destinations = service.currentDestinations || service.destination
-  const destinationText = getOriginsOrDestinationsAsText(destinations)
+  const destinationText = service.getDestinationsText()
 
   useEffect(() => {
     const intervalKey = setInterval(() => {
-      const timeDifference = getTimeDifference(diffInput)
-      const newDiff = getTimeDifferenceText(timeDifference)
-
-      if (newDiff !== timeDifferenceText) {
-        setTimeDifferenceText(newDiff)
+      if (service.getTimeDifferenceString() !== timeDifferenceText) {
+        setTimeDifferenceText(service.getTimeDifferenceString())
       }
-    }, 20 * 1000)
+    }, 10 * 1000)
 
     return () => {
       clearInterval(intervalKey)
     }
   })
-
-  const isDelayed = service.etd !== 'On time' && service.etd !== 'Cancelled' && service.etd !== service.std
 
   function onPress() {
     setIsDetailsModalShown(true)
@@ -52,20 +42,22 @@ const TrainItem: React.FC<ThemeProps & { service: ITrainService }> = ({ lightCol
     <TouchableHighlight underlayColor={backgroundColor} onPress={onPress}>
       <View style={[styles.root, { borderBottomColor: mutedColor }]}>
         <Center>
-          <Text style={[styles.ogTime, service.isCancelled && styles.badTrain]}>{service.std}</Text>
+          <Text style={[styles.ogTime, service.isCancelled && styles.badTrain]}>{service.timetabledTimeOfDeparture}</Text>
         </Center>
         <VStack space={1} style={styles.trainDetails}>
           <Text style={[styles.destination, service.isCancelled && styles.badTrain]}>{destinationText}</Text>
           <Text style={[styles.extraInfo, service.isCancelled && styles.badTrain]}>{extraInfo}</Text>
         </VStack>
         <Center style={styles.trainTimes}>
-          <Text style={[styles.time, styles.onTime, service.isCancelled && styles.cancelled, isDelayed && styles.delayed]}>{time}</Text>
+          <Text style={[styles.time, styles.onTime, service.isCancelled && styles.cancelled, service.isDelayed && styles.delayed]}>
+            {departureTimeString}
+          </Text>
           {!service.isCancelled && timeDifference <= 60 && <Text style={styles.timeStatus}>{timeDifferenceText}</Text>}
         </Center>
         <Center>
           <Ionicons name="ios-chevron-forward-outline" size={24} color={mutedColor} />
         </Center>
-        <TrainFullDetailsCard onClose={() => setIsDetailsModalShown(false)} trainData={service} open={isDetailsModalShown} />
+        <TrainFullDetailsCard onClose={() => setIsDetailsModalShown(false)} trainData={service.data} open={isDetailsModalShown} />
       </View>
     </TouchableHighlight>
   )

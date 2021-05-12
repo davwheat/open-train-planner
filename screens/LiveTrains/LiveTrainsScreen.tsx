@@ -15,6 +15,7 @@ import TrainItem from '../../components/TrainDisplay/TrainItem'
 import FetchDepartureBoard from '../../api/FetchDepartureBoard'
 import { useRecoilValue } from 'recoil'
 import { IDepartureBoardResponse } from '../../models/DepartureBoardResponse'
+import { TrainService } from '../../models/TrainService'
 
 export default function LiveTrainsScreen() {
   const [isLoading, setIsLoading] = React.useState(false)
@@ -82,7 +83,7 @@ export default function LiveTrainsScreen() {
               ) : trainData.results && trainData.results.trainServices ? (
                 <View style={styles.trainList}>
                   {trainData.results.trainServices.map(trainService => (
-                    <TrainItem key={trainService.serviceIdGuid} service={trainService} />
+                    <TrainItem key={trainService.serviceIdGuid} service={new TrainService(trainService)} />
                   ))}
                 </View>
               ) : (

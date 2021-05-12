@@ -1,6 +1,8 @@
 import type { ILocation } from './Location'
 import type { ICallingPoint } from './CallingPoint'
 import type { ITrainFormation } from './TrainFormation'
+import getOriginsOrDestinationsAsText from '../helpers/getOriginsOrDestinationsAsText'
+import { getTimeDifference, getTimeDifferenceText } from '../helpers/getTimeDifference'
 
 export interface ITrainService {
   formation: ITrainFormation
@@ -194,3 +196,91 @@ export interface ITrainService {
  * Unsure about this type.
  */
 export type AdhocAlerts = string[]
+export class TrainService {
+  data: ITrainService
+
+  constructor(data: ITrainService) {
+    this.data = data
+  }
+
+  /**
+   * Retrieves either the `currentOrigins` or the `origin`, depending
+   * on what is defined.
+   *
+   * @readonly
+   * @memberof TrainService
+   */
+  get activeOrigins(): ILocation[] {
+    return this.data.currentOrigins || this.data.origin
+  }
+
+  /**
+   * Retrieves either the `currentDestinations` or the `destination`,
+   * depending on what is defined.
+   *
+   * @readonly
+   * @memberof TrainService
+   */
+  get activeDestinations(): ILocation[] {
+    return this.data.currentDestinations || this.data.destination
+  }
+
+  /**
+   * Gets a string that represents the departure time for this service
+   * in HH:MM form.
+   *
+   * @readonly
+   * @memberof TrainService
+   */
+  get departureTime(): string {
+    const etd = this.data.etd
+
+    return (!['on time', 'delayed', 'cancelled', ''].includes(this.data.etd?.toLowerCase() || '') ? etd : this.data.std) as string
+  }
+
+  getTimeDifference(): number {
+    return getTimeDifference(this.departureTime)
+  }
+
+  getTimeDifferenceString(): string {
+    return getTimeDifferenceText(this.getTimeDifference())
+  }
+
+  getOriginsText(): string {
+    return getOriginsOrDestinationsAsText(this.activeOrigins)
+  }
+
+  getDestinationsText(): string {
+    return getOriginsOrDestinationsAsText(this.activeDestinations)
+  }
+
+  /**
+   * Returns the service's ETD.
+   *
+   * Usually either `'On time'`, `'Delayed'`, `'Cancelled'` or a time.
+   */
+  get estimatedTimeOfDeparture(): string {
+    return this.data.etd || ''
+  }
+
+  /**
+   * Returns the service's ETD.
+   *
+   * Usually either `'On time'`, `'Delayed'`, `'Cancelled'` or a time.
+   */
+  get timetabledTimeOfDeparture(): string {
+    return this.data.etd || ''
+  }
+
+  get isCancelledOrDelayed(): boolean {
+    return this.data.isCancelled || this.data.isCancelled
+  }
+
+  get isCancelled(): boolean {
+    return this.data.isCancelled
+  }
+
+  get isDelayed(): boolean {
+    return ['On time', 'Cancelled'].includes(this.estimatedTimeOfDeparture) && this.data.etd !== this.data.std
+  }
+}
