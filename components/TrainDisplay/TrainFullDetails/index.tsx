@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import { Modalize } from 'react-native-modalize'
 import { Portal } from 'react-native-portalize'
 
-import type { ITrainService } from '../../../models/TrainService'
+import type { TrainService } from '../../../models/TrainService'
 import type { ThemeProps } from '../../../types'
 import { useThemeColor } from '../../Themed'
 
@@ -11,7 +11,7 @@ import TrainDescription from './TrainDescription'
 import { Header } from './Header'
 
 interface Props {
-  trainData: ITrainService
+  trainService: TrainService
   /**
    * Is the details card open?
    */
@@ -19,7 +19,7 @@ interface Props {
   onClose: () => void
 }
 
-const TrainFullDetailsCard: React.FC<Props & ThemeProps> = ({ open, trainData, lightColor, darkColor, onClose }) => {
+const TrainFullDetailsCard: React.FC<Props & ThemeProps> = ({ open, trainService, lightColor, darkColor, onClose }) => {
   const modalRef = React.useRef<Modalize>(null)
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raisedBackground')
 
@@ -41,14 +41,18 @@ const TrainFullDetailsCard: React.FC<Props & ThemeProps> = ({ open, trainData, l
         handleStyle={styles.handle}
         HeaderComponent={
           <Header
-            estimatedDepartureTime={trainData.etd}
-            standardDepartureTime={trainData.std}
-            destinations={trainData.currentDestinations || trainData.destination}
+            estimatedDepartureTime={trainService.estimatedTimeOfDeparture}
+            standardDepartureTime={trainService.timetabledTimeOfDeparture}
+            destinations={trainService.activeDestinations}
           />
         }
       >
         <View>
-          <TrainDescription estimatedDepartureTime={trainData.etd} platform={trainData.platform} standardDepartureTime={trainData.std} />
+          <TrainDescription
+            estimatedDepartureTime={trainService.estimatedTimeOfDeparture}
+            platform={trainService.platform}
+            standardDepartureTime={trainService.timetabledTimeOfDeparture}
+          />
         </View>
       </Modalize>
     </Portal>

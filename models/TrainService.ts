@@ -283,4 +283,13 @@ export class TrainService {
   get isDelayed(): boolean {
     return ['On time', 'Cancelled'].includes(this.estimatedTimeOfDeparture) && this.data.etd !== this.data.std
   }
+
+  /**
+   * Gets which platform the train is in.
+   *
+   * Either a number (e.g. `'1'`), number/letter combo (e.g. `'3b'`), or `'unknown'`.
+   */
+  get platform(): string {
+    return this.data.isPlatformAvailable ? (this.data.platform as string) : 'unknown'
+  }
 }

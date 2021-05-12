@@ -57,7 +57,7 @@ const TrainItem: React.FC<ThemeProps & { service: TrainService }> = ({ lightColo
         <Center>
           <Ionicons name="ios-chevron-forward-outline" size={24} color={mutedColor} />
         </Center>
-        <TrainFullDetailsCard onClose={() => setIsDetailsModalShown(false)} trainData={service.data} open={isDetailsModalShown} />
+        <TrainFullDetailsCard onClose={() => setIsDetailsModalShown(false)} trainService={service} open={isDetailsModalShown} />
       </View>
     </TouchableHighlight>
   )
