@@ -6,7 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil'
-import { NativeBaseProvider, extendTheme } from 'native-base'
+import { NativeBaseProvider, extendTheme, Spinner, VStack } from 'native-base'
 
 import GenerateHuxley2Url from './api/GenerateHuxley2Url'
 import useCachedResources from './hooks/useCachedResources'
@@ -15,6 +15,9 @@ import Navigation from './navigation'
 import { stationsListAtom } from './atoms'
 import { StationPair, StationsListInStorage } from './types'
 import { primaryColor } from './constants/Colors'
+import { Text, View } from './components/Themed'
+import { StyleSheet } from 'react-native'
+import { Headline } from './components/Typography'
 
 export default function App() {
   const theme = extendTheme({
@@ -57,7 +60,19 @@ function InnerApp() {
   // const [apiStatus, setApiStatus] = useRecoilState(apiStatusAtom);
 
   if (!isLoadingComplete || !stationsList.loaded) {
-    return null
+    return (
+      <SafeAreaProvider>
+        <View style={styles.loadingSplash}>
+          <VStack space={2} alignItems="center">
+            <Spinner size="lg" />
+            <Headline>{!isLoadingComplete ? `Loading` : `First-time setup`}</Headline>
+            <Text>
+              {!isLoadingComplete ? `Fetching cached files` : `Fetching list of stations. This might take a few minutes. Please be patient.`}
+            </Text>
+          </VStack>
+        </View>
+      </SafeAreaProvider>
+    )
   } else {
     return (
       <SafeAreaProvider>
@@ -67,6 +82,16 @@ function InnerApp() {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  loadingSplash: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+})
 
 const StateManager: React.FC = () => {
   const [stationsList, setStationsList] = useRecoilState(stationsListAtom)
