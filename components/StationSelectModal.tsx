@@ -19,6 +19,7 @@ interface Props {
   filterAtom: RecoilState<string>
   disabled?: boolean
   open?: boolean
+  modalRef: React.RefObject<Modalize>
 }
 
 interface ItemProps {
@@ -33,31 +34,19 @@ const StationSelectModal: React.FC<Props & ThemeProps> = ({
   filterAtom,
   disabled = false,
   open = true,
+  modalRef,
 }) => {
   const stationsList = useRecoilValue(stationsListAtom)
   const stationFilter = useRecoilValue(filterAtom)
 
-  const modalRef = useRef<Modalize>(null)
-  const wasOpen = useRef<boolean | null>(null)
-
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raisedBackground')
 
-  const onOpen = () => {
-    modalRef.current?.open()
-  }
-
-  if (open && !wasOpen.current) {
-    onOpen()
-  }
-
-  if (wasOpen.current === null) wasOpen.current = open
-
   if (disabled) {
-    modalRef.current?.close()
+    modalRef?.current?.close()
   }
 
   const keyboardState = useKeyboardState()
-  if (keyboardState) modalRef.current?.open('top')
+  if (keyboardState) modalRef?.current?.open('top')
 
   const fuse = new Fuse(stationsList.data || [], {
     minMatchCharLength: 2,
@@ -74,7 +63,7 @@ const StationSelectModal: React.FC<Props & ThemeProps> = ({
     const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
 
     const onPress = useCallback(() => {
-      modalRef.current?.close()
+      modalRef?.current?.close()
       onSelectStation({ stationName, crsCode })
     }, [onSelectStation, modalRef])
 

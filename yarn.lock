@@ -8188,10 +8188,10 @@ realpath-native@^2.0.0:
   resolved "https://registry.yarnpkg.com/realpath-native/-/realpath-native-2.0.0.tgz#7377ac429b6e1fd599dc38d08ed942d0d7beb866"
   integrity sha512-v1SEYUOXXdbBZK8ZuNgO4TBjamPsiSgcFr0aP+tEKpQZK8vooEUqV6nm6Cv502mX4NF2EfsnVqtNAHG+/6Ur1Q==
 
-recoil-persistence@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/recoil-persistence/-/recoil-persistence-0.2.2.tgz#f299e6111da808b110db40bbca709ad44017b73a"
-  integrity sha512-KNLT3FL73VQIRMM/rYGbWkRTphsBZ1MiX9pjhTq/Jp15HfCAmyz22mc9QyvpMYj+vixkTemMKPeAmHWRjHSZYA==
+recoil-persistence@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/recoil-persistence/-/recoil-persistence-0.2.4.tgz#59250a0200bad6c39ac5ab00018fe7fce8cb862c"
+  integrity sha512-J4aKoHc7fIMEHj1U0Modha3tLtTm/fD9Sfy6Gt2KRTdTuKlCoVF4JpvKKoOYiAwX985XRTCf/D7UTYBYP2yrvg==
   optionalDependencies:
     "@react-native-async-storage/async-storage" "^1.15.0"
 

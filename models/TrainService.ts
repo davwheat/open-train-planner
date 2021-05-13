@@ -269,7 +269,7 @@ export class TrainService {
    * Usually either `'On time'`, `'Delayed'`, `'Cancelled'` or a time.
    */
   get timetabledTimeOfDeparture(): string {
-    return this.data.etd || ''
+    return this.data.std || ''
   }
 
   get isCancelledOrDelayed(): boolean {
@@ -281,7 +281,7 @@ export class TrainService {
   }
 
   get isDelayed(): boolean {
-    return ['On time', 'Cancelled'].includes(this.estimatedTimeOfDeparture) && this.data.etd !== this.data.std
+    return !['On time', 'Cancelled'].includes(this.estimatedTimeOfDeparture) && this.data.etd !== this.data.std
   }
 
   /**

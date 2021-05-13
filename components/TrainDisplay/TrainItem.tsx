@@ -15,7 +15,6 @@ const TrainItem: React.FC<ThemeProps & { service: TrainService }> = ({ lightColo
   const [isDetailsModalShown, setIsDetailsModalShown] = useState(false)
 
   const extraInfo = `${service.data.operator}`
-  const departureTimeString = service.estimatedTimeOfDeparture
   const timeDifference = service.getTimeDifference()
 
   const [timeDifferenceText, setTimeDifferenceText] = useState(service.getTimeDifferenceString())
@@ -50,7 +49,7 @@ const TrainItem: React.FC<ThemeProps & { service: TrainService }> = ({ lightColo
         </VStack>
         <Center style={styles.trainTimes}>
           <Text style={[styles.time, styles.onTime, service.isCancelled && styles.cancelled, service.isDelayed && styles.delayed]}>
-            {departureTimeString}
+            {service.estimatedTimeOfDeparture}
           </Text>
           {!service.isCancelled && timeDifference <= 60 && <Text style={styles.timeStatus}>{timeDifferenceText}</Text>}
         </Center>

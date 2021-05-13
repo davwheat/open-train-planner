@@ -1,31 +1,31 @@
 import React from 'react'
 
-import { getTimeDifference } from '../../../helpers/getTimeDifference'
-import type { ITrainService } from '../../../models/TrainService'
+import type { TrainService } from '../../../models/TrainService'
 import { Text } from '../../Themed'
 
 interface Props {
-  platform: ITrainService['platform']
-  estimatedDepartureTime: ITrainService['etd']
-  standardDepartureTime: ITrainService['std']
+  train: TrainService
 }
 
-const CallingPoints: React.FC<Props> = ({ platform, estimatedDepartureTime, standardDepartureTime }) => {
-  const diffInput = (estimatedDepartureTime === 'On time' ? standardDepartureTime : estimatedDepartureTime) as string
-  const timeDifference = getTimeDifference(diffInput)
+const TrainDescription: React.FC<Props> = ({ train }) => {
+  const timeDifference = train.getTimeDifference()
+  const unknownDeparture = train.isCancelledOrDelayed
 
-  const departureTime = (estimatedDepartureTime === 'On time' ? standardDepartureTime : estimatedDepartureTime) || 'XX:XX'
-
-  const unknownDeparture = estimatedDepartureTime === 'Cancelled' || estimatedDepartureTime === 'Delayed'
   const departingIn =
     (unknownDeparture ? 'Was departing ' : 'Departing ') +
-    (timeDifference > 1 ? `in ${timeDifference} mins (${departureTime})` : `now (${departureTime})`)
+    (timeDifference > 1 ? `in ${timeDifference} mins (${train.departureTime})` : `now (${train.departureTime})`)
 
-  const platformText = platform ? ` from platform ${platform}` : ''
+  const platformText = train.platform !== 'unknown' ? ` from platform ${train.platform}` : ''
 
   const detailsText = `${departingIn}${platformText}.`
 
-  return <Text>{detailsText}</Text>
+  return (
+    <>
+      <Text>{detailsText}</Text>
+      {train.isCancelled && <Text>{train.data.cancelReason}</Text>}
+      {train.isDelayed && <Text>{train.data.delayReason}</Text>}
+    </>
+  )
 }
 
-export default CallingPoints
+export default TrainDescription

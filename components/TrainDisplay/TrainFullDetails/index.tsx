@@ -48,11 +48,7 @@ const TrainFullDetailsCard: React.FC<Props & ThemeProps> = ({ open, trainService
         }
       >
         <View>
-          <TrainDescription
-            estimatedDepartureTime={trainService.estimatedTimeOfDeparture}
-            platform={trainService.platform}
-            standardDepartureTime={trainService.timetabledTimeOfDeparture}
-          />
+          <TrainDescription train={trainService} />
         </View>
       </Modalize>
     </Portal>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { Modalize } from 'react-native-modalize'
 import { Portal } from 'react-native-portalize'
 
@@ -10,6 +10,9 @@ import { StationPair } from '../../types'
 import { Headline } from '../Typography'
 import { useNavigation } from '@react-navigation/core'
 import { Button, VStack } from 'native-base'
+import { useSetRecoilState } from 'recoil'
+import { liveTrains_departureStationAtom } from '../../atoms/liveTrainsStationSelectAtom'
+import { favouriteStationsAtom } from '../../atoms'
 
 interface IStationActivateCardProps {
   station: StationPair
@@ -38,6 +41,9 @@ const FavouriteStationActiveCard: React.FC<IStationActivateCardProps & ThemeProp
 
   const navigation = useNavigation()
 
+  const setLiveTrainsDepartureStnState = useSetRecoilState(liveTrains_departureStationAtom)
+  const setFavouriteStations = useSetRecoilState(favouriteStationsAtom)
+
   return (
     <Portal>
       <Modalize
@@ -53,9 +59,10 @@ const FavouriteStationActiveCard: React.FC<IStationActivateCardProps & ThemeProp
         }
       >
         <View>
-          <VStack>
+          <VStack space={2}>
             <Button
               onPress={() => {
+                setLiveTrainsDepartureStnState(station)
                 close()
                 navigation.navigate('Live Trains')
               }}
@@ -64,11 +71,33 @@ const FavouriteStationActiveCard: React.FC<IStationActivateCardProps & ThemeProp
             </Button>
             <Button
               onPress={() => {
+                // setLiveTrainsDepartureStnState(station)
                 close()
-                navigation.navigate('Live Trains')
+                navigation.navigate('Train Planner')
               }}
             >
               Plan a journey
+            </Button>
+            <Button
+              colorScheme="red"
+              onPress={() => {
+                Alert.alert('Remove from favourites?', `Are you sure you want to remove ${station.stationName} from your favourites?`, [
+                  {
+                    text: 'Cancel',
+                    onPress: () => {},
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'Remove',
+                    onPress: () => {
+                      close()
+                      setFavouriteStations(stns => stns.filter(s => s.crsCode !== station.crsCode))
+                    },
+                  },
+                ])
+              }}
+            >
+              Remove favourite
             </Button>
           </VStack>
         </View>
