@@ -1,8 +1,8 @@
 import { Ionicons } from '@expo/vector-icons'
 import { Center, VStack } from 'native-base'
-import React, { useRef, useState } from 'react'
-import { Alert, StyleSheet, View } from 'react-native'
-import { TouchableHighlight } from 'react-native-gesture-handler'
+import React, { useRef } from 'react'
+import { Alert, Pressable, StyleSheet, View } from 'react-native'
+import makePressableStyle from '../../helpers/makePressableStyle'
 import { StationPair, ThemeProps } from '../../types'
 import { Text, useThemeColor } from '../Themed'
 import SelectStationModal from '../StationSelectModal'
@@ -12,7 +12,6 @@ import { Modalize } from 'react-native-modalize'
 
 const FavouriteStationExampleItem: React.FC<ThemeProps> = ({ lightColor, darkColor }) => {
   const mutedColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
 
   const [favouriteStations, setFavouriteStation] = useRecoilState(favouriteStationsAtom)
   const setFilter = useSetRecoilState(favouriteStationsFilterAtom)
@@ -40,7 +39,7 @@ const FavouriteStationExampleItem: React.FC<ThemeProps> = ({ lightColor, darkCol
   }
 
   return (
-    <TouchableHighlight underlayColor={backgroundColor} onPress={onPress}>
+    <Pressable style={({ pressed }) => [makePressableStyle(pressed, lightColor, darkColor)]} onPress={onPress}>
       <View style={[styles.root, { borderBottomColor: mutedColor }]}>
         <VStack space={1} style={styles.info}>
           <Text style={styles.name}>Add to favourites</Text>
@@ -51,7 +50,7 @@ const FavouriteStationExampleItem: React.FC<ThemeProps> = ({ lightColor, darkCol
         </Center>
         <SelectStationModal modalRef={modalRef} filterAtom={favouriteStationsFilterAtom} onSelectStation={onPickStation} />
       </View>
-    </TouchableHighlight>
+    </Pressable>
   )
 }
 

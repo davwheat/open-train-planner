@@ -1,11 +1,11 @@
 import { VStack } from 'native-base'
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useRecoilValue } from 'recoil'
 
 import { favouriteStationsAtom } from '../../atoms'
 import Card from '../Card'
-import { Text, View } from '../Themed'
+import { Text } from '../Themed'
 import FavouriteStationExampleItem from './FavouriteStationExampleItem'
 import FavouriteStationItem from './FavouriteStationItem'
 

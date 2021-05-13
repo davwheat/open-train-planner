@@ -25,6 +25,9 @@ export default function App() {
       Button: {
         defaultProps: {
           colorScheme: 'primary',
+          _text: {
+            color: 'white',
+          },
         },
         baseStyle: {
           fontSize: 18,
@@ -66,7 +69,7 @@ function InnerApp() {
       <SafeAreaProvider>
         <View style={styles.loadingSplash}>
           <VStack space={2} alignItems="center">
-            <Spinner size="lg" />
+            <Spinner size={64} />
             <Headline>{!isLoadingComplete ? `Loading` : `First-time setup`}</Headline>
             <Text>
               {!isLoadingComplete ? `Fetching cached files` : `Fetching list of stations. This might take a few minutes. Please be patient.`}

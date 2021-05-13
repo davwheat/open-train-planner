@@ -10,18 +10,20 @@ export default {
   light: {
     primary: primaryColor,
     text: '#000',
-    background:
-      '#f2f2f2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ',
+    lightText: '#888',
+    background: '#f2f2f2',
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
     raisedBackground: '#fff',
     border: tintColorLight,
     muted: mutedColorLight,
+    controlPressed: '#ececec',
   },
   dark: {
     primary: primaryColor,
     text: '#fff',
+    lightText: '#ccc',
     background: '#000',
     tint: tintColorDark,
     tabIconDefault: '#ccc',
@@ -29,5 +31,6 @@ export default {
     raisedBackground: '#111',
     border: tintColorDark,
     muted: mutedColorDark,
+    controlPressed: '#181818',
   },
 }

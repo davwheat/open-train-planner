@@ -9,6 +9,7 @@ import { useThemeColor } from '../../Themed'
 
 import TrainDescription from './TrainDescription'
 import { Header } from './Header'
+import BasicTrainInfo from './BasicTrainInfo'
 
 interface Props {
   trainService: TrainService
@@ -48,6 +49,7 @@ const TrainFullDetailsCard: React.FC<Props & ThemeProps> = ({ open, trainService
         }
       >
         <View>
+          <BasicTrainInfo train={trainService} />
           <TrainDescription train={trainService} />
         </View>
       </Modalize>

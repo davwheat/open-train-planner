@@ -1,6 +1,7 @@
 import type { ILocation } from './Location'
 import type { ICallingPoint } from './CallingPoint'
 import type { ITrainFormation } from './TrainFormation'
+import { default as applyStringifyOptions, StringifyFunctionOptions } from '../helpers/applyStringifyOptions'
 import getOriginsOrDestinationsAsText from '../helpers/getOriginsOrDestinationsAsText'
 import { getTimeDifference, getTimeDifferenceText } from '../helpers/getTimeDifference'
 
@@ -291,5 +292,23 @@ export class TrainService {
    */
   get platform(): string {
     return this.data.isPlatformAvailable ? (this.data.platform as string) : 'unknown'
+  }
+
+  get operatingCompany(): string {
+    return this.data.operator || ''
+  }
+
+  getCoachesText(options: Partial<StringifyFunctionOptions>): string {
+    let text = ''
+
+    if (this.data.length === 1) {
+      text = 'formed of 1 coach'
+    } else if (this.data.length ?? 0 > 1) {
+      text = `formed of ${this.data.length} coaches`
+    } else {
+      return ''
+    }
+
+    return applyStringifyOptions(text, options)
   }
 }

@@ -21,12 +21,11 @@ export function useThemeColor(props: { light?: string; dark?: string }, colorNam
   }
 }
 
-export type TextProps = ThemeProps & DefaultText['props']
+export type TextProps = { light?: boolean } & ThemeProps & DefaultText['props']
 export type ViewProps = ThemeProps & DefaultView['props'] & { fadeInOpacity?: Animated.Value }
 
-export function Text(props: TextProps) {
-  const { style, lightColor, darkColor, ...otherProps } = props
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text')
+export const Text: React.FC<TextProps> = ({ light, style, lightColor, darkColor, ...otherProps }) => {
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, light ? 'lightText' : 'text')
 
   return <DefaultText style={[{ color, fontSize: 18 }, style]} {...otherProps} />
 }

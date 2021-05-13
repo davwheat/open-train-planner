@@ -1,5 +1,5 @@
-import React, { useCallback, useRef } from 'react'
-import { RecoilState, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import React, { useCallback } from 'react'
+import { RecoilState, useRecoilState, useRecoilValue } from 'recoil'
 import { StyleSheet, View } from 'react-native'
 import { Modalize } from 'react-native-modalize'
 import { Portal } from 'react-native-portalize'
@@ -33,7 +33,7 @@ const StationSelectModal: React.FC<Props & ThemeProps> = ({
   onSelectStation,
   filterAtom,
   disabled = false,
-  open = true,
+  // open = true,
   modalRef,
 }) => {
   const stationsList = useRecoilValue(stationsListAtom)
