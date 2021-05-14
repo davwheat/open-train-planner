@@ -12,6 +12,8 @@ export default function applyStringifyOptions(text: string, options: Partial<Str
   const opts = { ...defaultStringifyOptions, ...options }
   let out = text.trim()
 
+  if (text === '') return ''
+
   if (opts.capitaliseStart) {
     out = text.substr(0, 1).toUpperCase() + text.substr(1)
   }
