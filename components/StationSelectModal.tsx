@@ -45,9 +45,6 @@ const StationSelectModal: React.FC<Props & ThemeProps> = ({
     modalRef?.current?.close()
   }
 
-  const keyboardState = useKeyboardState()
-  if (keyboardState) modalRef?.current?.open('top')
-
   const fuse = new Fuse(stationsList.data || [], {
     minMatchCharLength: 2,
     location: 0,
