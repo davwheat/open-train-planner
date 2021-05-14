@@ -9,7 +9,6 @@ export const getTimeDifference = (timeString: string): number => {
   const split = timeString.split(':')
 
   let now = dayjs().tz('Europe/London')
-  now = now.set('hour', 23).set('minute', 59)
   const nowHours = now.get('hours')
 
   const hours = parseInt(split[0])
