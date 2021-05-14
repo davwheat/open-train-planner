@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil'
 
 import { favouriteStationsAtom } from '../../atoms'
 import Card from '../Card'
-import { Text } from '../Themed'
+import Headline from '../Typography/Headline'
 import FavouriteStationExampleItem from './FavouriteStationExampleItem'
 import FavouriteStationItem from './FavouriteStationItem'
 
@@ -14,7 +14,7 @@ const FavouriteStationsCard: React.FC = () => {
 
   return (
     <Card>
-      <Text>Favourite stations</Text>
+      <Headline>Favourite stations</Headline>
 
       <View style={styles.faves}>
         <VStack>
