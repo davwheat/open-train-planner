@@ -10,14 +10,16 @@ export const defaultStringifyOptions: StringifyFunctionOptions = {
 
 export default function applyStringifyOptions(text: string, options: Partial<StringifyFunctionOptions>): string {
   const opts = { ...defaultStringifyOptions, ...options }
-  let out = text
+  let out = text.trim()
 
   if (opts.capitaliseStart) {
     out = text.substr(0, 1).toUpperCase() + text.substr(1)
   }
 
-  if (opts.addFullStop) {
+  if (opts.addFullStop && text.substr(-1, 1) !== '.') {
     out += '.'
+  } else if (!opts.addFullStop && text.substr(-1, 1) === '.') {
+    out = out.substr(0, out.length - 1)
   }
 
   return out
