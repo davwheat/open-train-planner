@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { RecoilState, useRecoilState } from 'recoil'
+import { RecoilState, useRecoilState, useSetRecoilState } from 'recoil'
 import { Modalize } from 'react-native-modalize'
 
 import type { StationPair } from '../types'
@@ -14,6 +14,7 @@ interface Props {
 
 const StationSelectBox: React.FC<Props> = ({ selectionAtom, filterAtom, disabled = false }) => {
   const [stationSelection, setStationSelection] = useRecoilState(selectionAtom)
+  const setFilter = useSetRecoilState(filterAtom)
 
   const modalRef = useRef<Modalize>(null)
 
@@ -26,12 +27,13 @@ const StationSelectBox: React.FC<Props> = ({ selectionAtom, filterAtom, disabled
   }
 
   function onSelectStation(station: StationPair) {
+    modalRef?.current?.close()
+
     if (stationSelection?.crsCode !== station.crsCode) {
       setStationSelection(station)
     }
 
-    modalRef?.current?.close()
-    setTimeout(() => modalRef?.current?.close(), 250)
+    setFilter('')
   }
 
   return (
