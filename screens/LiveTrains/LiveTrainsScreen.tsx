@@ -11,11 +11,13 @@ import Card from '../../components/Card'
 import FadeInView from '../../components/FadeInView'
 import TrainSkeleton from '../../components/TrainDisplay/TrainSkeleton'
 import TrainItem from '../../components/TrainDisplay/TrainItem'
+import PoweredByNationalRailEnquiries from '../../components/PoweredByNationalRailEnquiries'
 
 import FetchDepartureBoard from '../../api/FetchDepartureBoard'
 import { useRecoilValue } from 'recoil'
 import { IDepartureBoardResponse } from '../../models/DepartureBoardResponse'
 import { TrainService } from '../../models/TrainService'
+import { Headline } from '../../components/Typography'
 
 export default function LiveTrainsScreen() {
   const [isLoading, setIsLoading] = React.useState(false)
@@ -50,7 +52,7 @@ export default function LiveTrainsScreen() {
       <FadeInView>
         <View style={styles.container}>
           <Card>
-            <Text>Departure station</Text>
+            <Headline>Departure station</Headline>
             <StationSelectBox
               disabled={isLoading}
               selectionAtom={liveTrains_departureStationAtom}
@@ -93,6 +95,8 @@ export default function LiveTrainsScreen() {
               )}
             </Card>
           )}
+
+          <PoweredByNationalRailEnquiries />
         </View>
       </FadeInView>
     </ScrollView>

@@ -1,20 +1,23 @@
 import * as React from 'react'
 import { StyleSheet } from 'react-native'
-import FadeInView from '../components/FadeInView'
+import { ScrollView } from 'react-native-gesture-handler'
 
+import FadeInView from '../components/FadeInView'
 import { Text, View } from '../components/Themed'
+import PoweredByNationalRailEnquiries from '../components/PoweredByNationalRailEnquiries'
+import { Headline } from '../components/Typography'
 
 export default function TrainPlannerScreen() {
   return (
-    <FadeInView>
-      <View style={styles.container}>
-        <Text style={styles.title}>Train planner</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <Text style={styles.getStartedText} lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)">
-          You'll be able to find the fastest route between two stations from this page.
-        </Text>
-      </View>
-    </FadeInView>
+    <ScrollView>
+      <FadeInView>
+        <View style={styles.container}>
+          <Headline style={styles.title}>Train planner</Headline>
+          <Text style={styles.getStartedText}>You'll be able to find the fastest route between two stations from this page.</Text>
+          <PoweredByNationalRailEnquiries />
+        </View>
+      </FadeInView>
+    </ScrollView>
   )
 }
 

@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { View } from '../components/Themed'
 import FadeInView from '../components/FadeInView'
 import FavouriteStationsCard from '../components/FavouriteStations/FavouriteStationsCard'
+import PoweredByNationalRailEnquiries from '../components/PoweredByNationalRailEnquiries'
 
 const HomeScreen: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const HomeScreen: React.FC = () => {
       <FadeInView>
         <View style={styles.container}>
           <FavouriteStationsCard />
+          <PoweredByNationalRailEnquiries />
         </View>
       </FadeInView>
     </ScrollView>
