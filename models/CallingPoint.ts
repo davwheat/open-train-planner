@@ -1,6 +1,21 @@
 import type { ITrainFormation } from './TrainFormation'
 import type { AdhocAlerts } from './TrainService'
 
+export interface ICallingPointData {
+  assocIsCancelled: boolean
+  callingPoint: ICallingPoint
+  serviceChangeRequired: boolean
+
+  /**
+   * Will only be `0`.
+   *
+   * - `0` - train
+   * - `1` - bus
+   * - `2` - ferry
+   */
+  serviceType: 0
+}
+
 export interface ICallingPoint {
   locationName: string
 

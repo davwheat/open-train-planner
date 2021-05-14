@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Modalize } from 'react-native-modalize'
 import { Portal } from 'react-native-portalize'
+import { VStack } from 'native-base'
 
 import type { TrainService } from '../../../models/TrainService'
 import type { ThemeProps } from '../../../types'
@@ -10,6 +11,7 @@ import { useThemeColor } from '../../Themed'
 import TrainDescription from './TrainDescription'
 import { Header } from './Header'
 import BasicTrainInfo from './BasicTrainInfo'
+import CallingPoints from './CallingPoints/CallingPoints'
 
 interface Props {
   trainService: TrainService
@@ -49,8 +51,11 @@ const TrainFullDetailsCard: React.FC<Props & ThemeProps> = ({ open, trainService
         }
       >
         <View>
-          <BasicTrainInfo train={trainService} />
-          <TrainDescription train={trainService} />
+          <VStack space={1}>
+            <BasicTrainInfo train={trainService} />
+            <TrainDescription train={trainService} />
+            <CallingPoints train={trainService} />
+          </VStack>
         </View>
       </Modalize>
     </Portal>

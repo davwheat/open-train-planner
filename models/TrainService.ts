@@ -1,5 +1,5 @@
 import type { ILocation } from './Location'
-import type { ICallingPoint } from './CallingPoint'
+import type { ICallingPoint, ICallingPointData } from './CallingPoint'
 import type { ITrainFormation } from './TrainFormation'
 import { default as applyStringifyOptions, StringifyFunctionOptions } from '../helpers/applyStringifyOptions'
 import getOriginsOrDestinationsAsText from '../helpers/getOriginsOrDestinationsAsText'
@@ -159,14 +159,14 @@ export interface ITrainService {
    *
    * `null` if there are no previous stops.
    */
-  previousCallingPoints?: ICallingPoint[] | null
+  previousCallingPoints?: ICallingPointData[] | null
 
   /**
    * Only present if on Departures or Arrivals & Departures **and** `?expand=true` is set when calling the endpoint.
    *
    * `null` if there are no previous stops.
    */
-  subsequentCallingPoints?: ICallingPoint[] | null
+  subsequentCallingPoints?: ICallingPointData[] | null
 
   serviceId: string
 
@@ -316,5 +316,27 @@ export class TrainService {
     }
 
     return applyStringifyOptions(text, options)
+  }
+
+  /**
+   * Returns the delay reason, or an empty string.
+   */
+  getDelayReason(options: Partial<StringifyFunctionOptions> = {}): string {
+    const reason = this.data.delayReason
+
+    if (!reason) return ''
+
+    return applyStringifyOptions(reason, options)
+  }
+
+  /**
+   * Returns the cancel reason, or an empty string.
+   */
+  getCancelReason(options: Partial<StringifyFunctionOptions> = {}): string {
+    const reason = this.data.cancelReason
+
+    if (!reason) return ''
+
+    return applyStringifyOptions(reason, options)
   }
 }

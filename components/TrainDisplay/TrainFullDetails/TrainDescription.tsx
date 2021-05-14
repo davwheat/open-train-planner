@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { VStack } from 'native-base'
+
 import type { TrainService } from '../../../models/TrainService'
 import { Text } from '../../Themed'
 
@@ -17,12 +19,15 @@ const TrainDescription: React.FC<Props> = ({ train }) => {
 
   const detailsText = `${departingIn}${platformText}.`
 
+  const cancelReason = train.getDelayReason()
+  const delayReason = train.getDelayReason()
+
   return (
-    <>
+    <VStack space={1}>
       <Text>{detailsText}</Text>
-      {train.isCancelled && <Text>{train.data.cancelReason}</Text>}
-      {train.isDelayed && <Text>{train.data.delayReason}</Text>}
-    </>
+      {train.isCancelled && cancelReason ? <Text>{train.getCancelReason()}</Text> : null}
+      {train.isDelayed && delayReason ? <Text>{train.getDelayReason()}</Text> : null}
+    </VStack>
   )
 }
 

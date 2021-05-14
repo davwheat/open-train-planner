@@ -1,6 +1,6 @@
-import { VStack } from 'native-base'
 import React from 'react'
 import { StyleSheet } from 'react-native'
+import { VStack } from 'native-base'
 
 import type { TrainService } from '../../../models/TrainService'
 import { Text } from '../../Themed'
@@ -12,8 +12,8 @@ interface Props {
 const BasicTrainInfo: React.FC<Props> = ({ train }) => {
   let text: string[] = []
 
-  if (train.operatingCompany) text.push(`${train.operatingCompany} service`)
-  text.push(train.getCoachesText({ addFullStop: true, capitaliseStart: true }))
+  if (train.operatingCompany)
+    text.push(`${train.operatingCompany} service ${train.getCoachesText({ addFullStop: true, capitaliseStart: false })}`)
 
   return (
     <VStack space={1}>
