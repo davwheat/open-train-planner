@@ -56,7 +56,7 @@ const StationSelectModal: React.FC<Props & ThemeProps> = ({
   const data = fuse.search(stationFilter).map(result => result.item)
 
   const Item: React.FC<ItemProps & ThemeProps> = ({ stationName, crsCode, lightColor, darkColor }) => {
-    const borderStyle = { borderTopColor: useThemeColor({ light: lightColor, dark: darkColor }, 'border') }
+    const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
     const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
 
     const onPress = useCallback(() => {
@@ -66,7 +66,7 @@ const StationSelectModal: React.FC<Props & ThemeProps> = ({
 
     return (
       <TouchableHighlight underlayColor={backgroundColor} onPress={onPress}>
-        <View style={[styles.item, borderStyle]}>
+        <View style={[styles.item, { borderColor }]}>
           <Text style={styles.title}>{stationName}</Text>
           <Text style={styles.subtitle}>{crsCode}</Text>
         </View>
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     padding: 4,
     paddingLeft: 8,
     paddingRight: 8,
-    borderTopWidth: 1,
+    borderBottomWidth: 1,
   },
   title: {
     fontWeight: 'bold',
