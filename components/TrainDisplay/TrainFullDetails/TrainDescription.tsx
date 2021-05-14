@@ -8,12 +8,10 @@ interface Props {
 }
 
 const TrainDescription: React.FC<Props> = ({ train }) => {
-  const timeDifference = train.getTimeDifference()
+  const timeDifference = train.getTimeDifferenceString()
   const unknownDeparture = train.isCancelledOrDelayed
 
-  const departingIn =
-    (unknownDeparture ? 'Was departing ' : 'Departing ') +
-    (timeDifference > 1 ? `in ${timeDifference} mins (${train.departureTime})` : `now (${train.departureTime})`)
+  const departingIn = (unknownDeparture ? 'Was departing ' : 'Departing ') + `${timeDifference} (${train.departureTime})`
 
   const platformText = train.platform !== 'unknown' ? ` from platform ${train.platform}` : ''
 
