@@ -243,6 +243,12 @@ export class TrainService {
     return getTimeDifference(this.departureTime)
   }
 
+  /**
+   * Gets a string that states when this train will depart.
+   *
+   * @example "in 5 mins"
+   * @example "now"
+   */
   getTimeDifferenceString(): string {
     return getTimeDifferenceText(this.getTimeDifference())
   }
