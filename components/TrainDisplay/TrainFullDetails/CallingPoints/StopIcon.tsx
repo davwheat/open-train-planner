@@ -4,22 +4,39 @@ import { ZStack } from 'native-base'
 
 import { useThemeColor } from '../../../Themed'
 import type { ThemeProps } from '../../../../types'
+import { cancelledColor, delayedColor } from '../../../../constants/Colors'
 
 interface IProps {
   /**
    * Is this the last station?
    */
   isLast: boolean
+  status: 'normal' | 'cancelled' | 'delayed'
 }
 
-const StopIcon: React.FC<IProps & ThemeProps> = ({ darkColor, lightColor, isLast }) => {
+const StopIcon: React.FC<IProps & ThemeProps> = ({ darkColor, lightColor, isLast, status }) => {
   const mainColor = useThemeColor({ light: lightColor, dark: darkColor }, 'primary')
   const mutedColor = useThemeColor({ light: lightColor, dark: darkColor }, 'tint')
 
   return (
     <ZStack style={styles.root}>
-      <View style={[styles.joiner, { backgroundColor: mutedColor }, isLast ? { height: '50%', top: 0 } : {}]} />
-      <View style={[styles.blob, { backgroundColor: mainColor }]} />
+      <View
+        style={[
+          styles.joiner,
+          { backgroundColor: mutedColor },
+          isLast && { height: '50%', top: 0 },
+          status === 'cancelled' && styles.cancelledBlob,
+          status === 'delayed' && styles.delayedBlob,
+        ]}
+      />
+      <View
+        style={[
+          styles.blob,
+          { backgroundColor: mainColor },
+          status === 'cancelled' && styles.cancelledBlob,
+          status === 'delayed' && styles.delayedBlob,
+        ]}
+      />
       {/* <View style={[styles.joiner, { backgroundColor: mutedColor }]} /> */}
     </ZStack>
   )
@@ -54,6 +71,12 @@ const styles = StyleSheet.create({
     // left: -BLOB_SIZE / 2,
     // top: 0,
     // transform: [{ translateY: '-100%' }],
+  },
+  cancelledBlob: {
+    backgroundColor: cancelledColor,
+  },
+  delayedBlob: {
+    backgroundColor: delayedColor,
   },
 })
 

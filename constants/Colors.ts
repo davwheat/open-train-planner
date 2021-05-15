@@ -6,6 +6,9 @@ const mutedColorDark = '#bbb'
 
 export const primaryColor = '#008dde'
 
+export const cancelledColor = '#d22'
+export const delayedColor = '#e88a1e'
+
 export default {
   light: {
     primary: primaryColor,

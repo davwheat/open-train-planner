@@ -7,6 +7,7 @@ import type { ThemeProps } from '../../types'
 import TrainFullDetailsCard from './TrainFullDetails'
 import { TouchableHighlight } from 'react-native-gesture-handler'
 import { TrainService } from '../../models/TrainService'
+import { cancelledColor, delayedColor } from '../../constants/Colors'
 
 const TrainItem: React.FC<ThemeProps & { service: TrainService }> = ({ lightColor, darkColor, service }) => {
   const mutedColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
@@ -37,22 +38,25 @@ const TrainItem: React.FC<ThemeProps & { service: TrainService }> = ({ lightColo
     setIsDetailsModalShown(true)
   }
 
+  const timeChanged = service.estimatedTimeOfDeparture !== 'On time'
+
   return (
     <TouchableHighlight underlayColor={backgroundColor} onPress={onPress}>
       <View style={[styles.root, { borderBottomColor: mutedColor }]}>
-        <Center>
-          <Text style={[styles.ogTime, service.isCancelled && styles.badTrain]}>{service.timetabledTimeOfDeparture}</Text>
+        <Center style={styles.trainTimes}>
+          <Text style={[styles.ogTime, timeChanged && styles.strikeThrough, !timeChanged && styles.bold]}>
+            {service.timetabledTimeOfDeparture}
+          </Text>
+          {timeChanged && (
+            <Text style={[styles.timeStatus, styles.bold, service.isCancelled && styles.cancelled, service.isDelayed && styles.delayed]}>
+              {service.estimatedTimeOfDeparture}
+            </Text>
+          )}
         </Center>
         <VStack space={1} style={styles.trainDetails}>
           <Text style={[styles.destination, service.isCancelled && styles.badTrain]}>{destinationText}</Text>
           <Text style={[styles.extraInfo, service.isCancelled && styles.badTrain]}>{extraInfo}</Text>
         </VStack>
-        <Center style={styles.trainTimes}>
-          <Text style={[styles.time, styles.onTime, service.isCancelled && styles.cancelled, service.isDelayed && styles.delayed]}>
-            {service.estimatedTimeOfDeparture}
-          </Text>
-          {!service.isCancelled && timeDifference <= 60 && <Text style={styles.timeStatus}>{timeDifferenceText}</Text>}
-        </Center>
         <Center>
           <Ionicons name="ios-chevron-forward-outline" size={24} color={mutedColor} />
         </Center>
@@ -75,8 +79,11 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   trainTimes: {
-    minWidth: 48,
     marginRight: 8,
+    alignContent: 'center',
+    display: 'flex',
+    minWidth: 52,
+    justifyContent: 'center',
   },
   skeleton: {
     margin: 0,
@@ -105,25 +112,24 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 14,
     margin: 0,
-    opacity: 0.75,
+    // opacity: 0.75,
   },
   ogTime: {
     fontSize: 16,
-    marginLeft: -2,
-    marginRight: 12,
+    // marginLeft: -2,
+    // marginRight: 12,
   },
   cancelled: {
-    color: '#d22',
+    color: cancelledColor,
   },
   delayed: {
-    color: '#d60',
+    color: delayedColor,
   },
-  onTime: {
-    color: '#2d2',
+  strikeThrough: {
+    textDecorationLine: 'line-through',
   },
-  badTrain: {
-    fontWeight: 'normal',
-    opacity: 0.65,
+  bold: {
+    fontWeight: 'bold',
   },
 })
 
