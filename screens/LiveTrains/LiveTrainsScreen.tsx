@@ -81,6 +81,7 @@ export default function LiveTrainsScreen() {
                   <TrainSkeleton />
                   <TrainSkeleton />
                   <TrainSkeleton />
+                  <TrainSkeleton />
                 </View>
               ) : trainData.results && trainData.results.trainServices ? (
                 <View style={styles.trainList}>
