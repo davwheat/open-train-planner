@@ -4,6 +4,8 @@ import NetInfo from '@react-native-community/netinfo'
 import GenerateHuxley2Url from './GenerateHuxley2Url'
 import openMainSettingsApp from '../helpers/openMainSettingsApp'
 
+import FakeDepartureData from './fakeDeparturesData_ECR.json'
+
 const apiRequestOptions = {
   expand: 'true',
   timeOffset: '0',
@@ -26,6 +28,8 @@ export default async function FetchDepartureBoard({
   let url = filterCrsCode
     ? GenerateHuxley2Url('all', [crsCode, filterType, filterCrsCode], apiRequestOptions)
     : GenerateHuxley2Url('all', [crsCode], apiRequestOptions)
+
+  if (USE_DEBUG_DATA) return filterServicesToDepartingTrainsOnly(FakeDepartureData as unknown as IDepartureBoardResponse)
 
   const netInfo = await NetInfo.fetch()
 
