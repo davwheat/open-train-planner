@@ -19,7 +19,7 @@ const TrainItem: React.FC<ThemeProps & { service: TrainService }> = ({ lightColo
 
   const [timeDifferenceText, setTimeDifferenceText] = useState(service.getTimeDifferenceString())
 
-  const destinationText = service.getDestinationsText()
+  const destinationText = service.getScheduledDestinationsText()
 
   useEffect(() => {
     const intervalKey = setInterval(() => {

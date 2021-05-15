@@ -227,6 +227,26 @@ export class TrainService {
   }
 
   /**
+   * Retrieves the train's scheduled origin(s).
+   *
+   * @readonly
+   * @memberof TrainService
+   */
+  get scheduledOrigins(): ILocation[] {
+    return this.data.origin
+  }
+
+  /**
+   * Retrieves the train's scheduled destination(s).
+   *
+   * @readonly
+   * @memberof TrainService
+   */
+  get scheduledDestinations(): ILocation[] {
+    return this.data.destination
+  }
+
+  /**
    * Gets a string that represents the departure time for this service
    * in HH:MM form.
    *
@@ -253,12 +273,18 @@ export class TrainService {
     return getTimeDifferenceText(this.getTimeDifference())
   }
 
-  getOriginsText(): string {
-    return getOriginsOrDestinationsAsText(this.activeOrigins)
+  /**
+   * Creates a string that combines the scheduled origins for this train.
+   */
+  getScheduledOriginsText(): string {
+    return getOriginsOrDestinationsAsText(this.scheduledOrigins)
   }
 
-  getDestinationsText(): string {
-    return getOriginsOrDestinationsAsText(this.activeDestinations)
+  /**
+   * Creates a string that combines the scheduled destinations for this train.
+   */
+  getScheduledDestinationsText(): string {
+    return getOriginsOrDestinationsAsText(this.scheduledDestinations)
   }
 
   /**

@@ -46,7 +46,7 @@ const TrainFullDetailsCard: React.FC<Props & ThemeProps> = ({ open, trainService
           <Header
             estimatedDepartureTime={trainService.estimatedTimeOfDeparture}
             standardDepartureTime={trainService.timetabledTimeOfDeparture}
-            destinations={trainService.activeDestinations}
+            destinations={trainService.scheduledDestinations}
           />
         }
       >
