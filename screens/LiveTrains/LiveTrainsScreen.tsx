@@ -91,7 +91,7 @@ export default function LiveTrainsScreen() {
                 </View>
               ) : (
                 <View style={styles.trainList}>
-                  <Text>No trains available for search</Text>
+                  <Text>No trains could be found from {selectedStation?.stationName} at the moment.</Text>
                 </View>
               )}
             </Card>
