@@ -40,7 +40,7 @@ const TrainFullDetailsCard: React.FC<Props & ThemeProps> = ({ open, trainService
         onClose={onClose}
         modalStyle={customModalStyle}
         ref={modalRef}
-        handlePosition="inside"
+        handlePosition="outside"
         handleStyle={styles.handle}
         HeaderComponent={
           <Header

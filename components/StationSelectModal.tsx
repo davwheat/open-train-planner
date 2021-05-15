@@ -87,7 +87,7 @@ const StationSelectModal: React.FC<Props & ThemeProps> = ({
         modalStyle={customModalStyle}
         HeaderComponent={headerComponent}
         ref={modalRef}
-        handlePosition="inside"
+        handlePosition="outside"
         handleStyle={styles.handle}
       >
         <View>

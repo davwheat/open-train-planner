@@ -50,7 +50,7 @@ const FavouriteStationActiveCard: React.FC<IStationActivateCardProps & ThemeProp
         onClose={onClose}
         modalStyle={customModalStyle}
         ref={modalRef}
-        handlePosition="inside"
+        handlePosition="outside"
         handleStyle={styles.handle}
         HeaderComponent={
           <View style={styles.header}>
