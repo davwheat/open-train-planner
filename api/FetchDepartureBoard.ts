@@ -10,14 +10,22 @@ const apiRequestOptions = {
   timeWindow: '120',
 }
 
-export default async function FetchDepartureBoard(
-  crsCode: string,
-  filterType: 'from' | 'to' = 'to',
-  filterCrsCode?: string,
-): Promise<IDepartureBoardResponse> {
+const USE_DEBUG_DATA = true
+
+interface DepartureBoardOptions {
+  crsCode: string
+  filterType: 'from' | 'to'
+  filterCrsCode?: string
+}
+
+export default async function FetchDepartureBoard({
+  crsCode,
+  filterType = 'to',
+  filterCrsCode,
+}: DepartureBoardOptions): Promise<IDepartureBoardResponse> {
   let url = filterCrsCode
-    ? GenerateHuxley2Url('departures', [crsCode, filterType, filterCrsCode], apiRequestOptions)
-    : GenerateHuxley2Url('departures', [crsCode], apiRequestOptions)
+    ? GenerateHuxley2Url('all', [crsCode, filterType, filterCrsCode], apiRequestOptions)
+    : GenerateHuxley2Url('all', [crsCode], apiRequestOptions)
 
   const netInfo = await NetInfo.fetch()
 
@@ -56,6 +64,13 @@ export default async function FetchDepartureBoard(
       ],
     }
   } else {
-    return (await response.json()) as IDepartureBoardResponse
+    return filterServicesToDepartingTrainsOnly((await response.json()) as IDepartureBoardResponse)
   }
+}
+
+function filterServicesToDepartingTrainsOnly(data: IDepartureBoardResponse): IDepartureBoardResponse {
+  const newServices = data.trainServices?.filter(s => s.etd)
+  data.trainServices = newServices ?? null
+
+  return data
 }

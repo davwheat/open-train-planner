@@ -34,7 +34,7 @@ export default function LiveTrainsScreen() {
       return
     }
 
-    FetchDepartureBoard(selectedStation.crsCode)
+    FetchDepartureBoard({ crsCode: selectedStation.crsCode })
       .then(data => {
         setTrainData({ results: data })
       })
