@@ -17,7 +17,7 @@ const CallingPoints: React.FC<Props> = ({ train }) => {
 
   return (
     <VStack space={0} mt={4}>
-      <Text style={{ marginBottom: 8, fontWeight: 'bold' }}>Calling at...</Text>
+      <Text style={{ marginBottom: 8, fontWeight: 'bold' }}>{train.isCancelled ? 'Was calling at...' : 'Calling at...'}</Text>
       {Array.isArray(callingPoints) &&
         callingPoints.map((callingPoint, i) => (
           <StopItem key={`${callingPoint.crs}__${callingPoint.st}`} callingPoint={callingPoint} isLast={i === callingPoints?.length - 1} />
