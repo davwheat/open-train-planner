@@ -304,15 +304,22 @@ export class TrainService {
     return this.data.operator || ''
   }
 
+  /**
+   * Get the number of coaches in this service.
+   *
+   * @example '12 coaches'
+   * @example '1 coach'
+   * @example 'unknown length'
+   */
   getCoachesText(options: Partial<StringifyFunctionOptions>): string {
     let text = ''
 
     if (this.data.length === 1) {
-      text = 'formed of 1 coach'
+      text = '1 coach'
     } else if (this.data.length ?? 0 > 1) {
-      text = `formed of ${this.data.length} coaches`
+      text = `${this.data.length} coaches`
     } else {
-      return ''
+      return 'unknown length'
     }
 
     return applyStringifyOptions(text, options)
