@@ -63,7 +63,8 @@
     "recoil": "^0.3.0",
     "recoil-persistence": "^0.2.4",
     "styled-components": "^5.3.0",
-    "styled-system": "^5.1.5"
+    "styled-system": "^5.1.5",
+    "uk-railway-stations": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.2",
