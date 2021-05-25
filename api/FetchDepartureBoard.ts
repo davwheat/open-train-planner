@@ -16,14 +16,14 @@ const USE_DEBUG_DATA = true
 
 interface DepartureBoardOptions {
   crsCode: string
-  filterType: 'from' | 'to'
+  filterType?: 'from' | 'to'
   filterCrsCode?: string
 }
 
 export default async function FetchDepartureBoard({
   crsCode,
   filterType = 'to',
-  filterCrsCode,
+  filterCrsCode = undefined,
 }: DepartureBoardOptions): Promise<IDepartureBoardResponse> {
   let url = filterCrsCode
     ? GenerateHuxley2Url('all', [crsCode, filterType, filterCrsCode], apiRequestOptions)
