@@ -47,7 +47,7 @@ const JOINER_WIDTH = 4
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
+    marginLeft: 8,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

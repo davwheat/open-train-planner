@@ -19,7 +19,7 @@ const StopItem: React.FC<IProps> = ({ callingPoint, isLast }) => {
   const status = cancelled ? 'cancelled' : onTime ? 'normal' : 'delayed'
 
   return (
-    <HStack space={3}>
+    <HStack space={4}>
       <StopIcon status={status} isLast={isLast} />
 
       <VStack space={0.75} style={styles.info}>
