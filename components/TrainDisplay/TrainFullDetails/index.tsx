@@ -42,13 +42,7 @@ const TrainFullDetailsCard: React.FC<Props & ThemeProps> = ({ open, trainService
         ref={modalRef}
         handlePosition="outside"
         handleStyle={styles.handle}
-        HeaderComponent={
-          <Header
-            estimatedDepartureTime={trainService.estimatedTimeOfDeparture}
-            standardDepartureTime={trainService.timetabledTimeOfDeparture}
-            destinations={trainService.scheduledDestinations}
-          />
-        }
+        HeaderComponent={<Header trainService={trainService} />}
       >
         <View>
           <VStack space={1}>
