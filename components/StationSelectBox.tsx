@@ -5,16 +5,21 @@ import { Modalize } from 'react-native-modalize'
 import type { StationPair } from '../types'
 import FakeSelectDropdown from './FakeSelectDropdown'
 import StationSelectModal from './StationSelectModal'
+import { useResetRecoilState } from 'recoil'
 
 interface Props {
   selectionAtom: RecoilState<StationPair | null>
   filterAtom: RecoilState<string>
-  disabled: boolean
+  disabled?: boolean
+  showResetButton?: boolean
 }
 
-const StationSelectBox: React.FC<Props> = ({ selectionAtom, filterAtom, disabled = false }) => {
+const StationSelectBox: React.FC<Props> = ({ selectionAtom, filterAtom, disabled = false, showResetButton = false }) => {
   const [stationSelection, setStationSelection] = useRecoilState(selectionAtom)
+  const resetStation = useResetRecoilState(selectionAtom)
+
   const setFilter = useSetRecoilState(filterAtom)
+  const resetFilter = useResetRecoilState(filterAtom)
 
   const modalRef = useRef<Modalize>(null)
 
@@ -38,7 +43,17 @@ const StationSelectBox: React.FC<Props> = ({ selectionAtom, filterAtom, disabled
 
   return (
     <>
-      <FakeSelectDropdown disabled={disabled} value={stationSelection?.stationName} placeholder="Select station" onPress={open} />
+      <FakeSelectDropdown
+        showResetButton={showResetButton}
+        onReset={() => {
+          resetStation()
+          resetFilter()
+        }}
+        disabled={disabled}
+        value={stationSelection?.stationName}
+        placeholder="Select station"
+        onPress={open}
+      />
       <StationSelectModal filterAtom={filterAtom} disabled={disabled} modalRef={modalRef} onSelectStation={onSelectStation} />
     </>
   )
