@@ -3,15 +3,14 @@ import { StyleSheet } from 'react-native'
 
 import { Text, TextProps } from '../Themed'
 
-const Headline: React.FC<TextProps> = ({ style, ...props }) => {
+const Whisper: React.FC<TextProps> = ({ style, ...props }) => {
   return <Text {...props} style={[styles.root, style]} />
 }
 
 const styles = StyleSheet.create({
   root: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: 16,
   },
 })
 
-export default Headline
+export default Whisper
