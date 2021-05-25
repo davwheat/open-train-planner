@@ -12,7 +12,7 @@ const apiRequestOptions = {
   timeWindow: '120',
 }
 
-const USE_DEBUG_DATA = true
+const USE_DEBUG_DATA = false
 
 interface DepartureBoardOptions {
   crsCode: string
