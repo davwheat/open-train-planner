@@ -1,31 +1,35 @@
 import React from 'react'
 
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
+import { VStack, HStack } from 'native-base'
 
-import { Headline } from '../../Typography'
-import getOriginsOrDestinationsAsText from '../../../helpers/getOriginsOrDestinationsAsText'
-import { ITrainService } from '../../../models/TrainService'
+import { Headline, Whisper } from '../../Typography'
+import { TrainService } from '../../../models/TrainService'
 
 interface HeaderProps {
-  estimatedDepartureTime: ITrainService['etd']
-  standardDepartureTime: ITrainService['std']
-  destinations: ITrainService['destination'] | ITrainService['origin']
+  trainService: TrainService
 }
 
-export const Header: React.FC<HeaderProps> = ({ destinations, estimatedDepartureTime, standardDepartureTime }) => {
-  const departureTime = (estimatedDepartureTime === 'On time' ? standardDepartureTime : estimatedDepartureTime) || 'XX:XX'
+export const Header: React.FC<HeaderProps> = ({ trainService }) => {
+  const via = trainService.viaText
 
   return (
-    <View style={styles.header}>
-      <Headline>
-        {departureTime} • {getOriginsOrDestinationsAsText(destinations)}
-      </Headline>
-    </View>
+    <HStack space={2} style={styles.header}>
+      <Headline>{trainService.departureTime}</Headline>
+      <Headline>•</Headline>
+      <VStack>
+        <Headline>{trainService.destinationText}</Headline>
+        {via && <Whisper>{via}</Whisper>}
+      </VStack>
+    </HStack>
   )
 }
 
 const styles = StyleSheet.create({
   header: {
     marginBottom: 16,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 })

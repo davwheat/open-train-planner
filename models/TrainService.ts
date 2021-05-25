@@ -207,9 +207,6 @@ export class TrainService {
   /**
    * Retrieves either the `currentOrigins` or the `origin`, depending
    * on what is defined.
-   *
-   * @readonly
-   * @memberof TrainService
    */
   get activeOrigins(): ILocation[] {
     return this.data.currentOrigins || this.data.origin
@@ -218,12 +215,29 @@ export class TrainService {
   /**
    * Retrieves either the `currentDestinations` or the `destination`,
    * depending on what is defined.
-   *
-   * @readonly
-   * @memberof TrainService
    */
   get activeDestinations(): ILocation[] {
     return this.data.currentDestinations || this.data.destination
+  }
+
+  /**
+   * Retrieves either the scheduled origins if the service is cancelled,
+   * or the active origins is not available.
+   */
+  get applicableOrigins(): ILocation[] {
+    if (this.isCancelled) return this.data.origin
+
+    return this.activeOrigins
+  }
+
+  /**
+   * Retrieves either the scheduled destinations if the service is cancelled,
+   * or the active destinations is not available.
+   */
+  get applicableDestinations(): ILocation[] {
+    if (this.isCancelled) return this.data.destination
+
+    return this.activeDestinations
   }
 
   /**
@@ -244,6 +258,38 @@ export class TrainService {
    */
   get scheduledDestinations(): ILocation[] {
     return this.data.destination
+  }
+
+  /**
+   * If cancelled, returns the scheduled destination, otherwise (if available) returns the active (changed) destination,
+   * otherwise returns the scheduled destination.
+   */
+  get destinationText(): string {
+    return getOriginsOrDestinationsAsText(this.applicableDestinations)
+  }
+
+  /**
+   * If cancelled, returns the scheduled origin, otherwise (if available) returns the active (changed) origin,
+   * otherwise returns the scheduled origin.
+   */
+  get originsText(): string {
+    return getOriginsOrDestinationsAsText(this.applicableOrigins)
+  }
+
+  /**
+   * Returns the via text of the applicable destination, if only one destination is specified.
+   *
+   * If none, returns `null`.
+   */
+  get viaText(): string | null {
+    if (this.applicableDestinations.length === 1) {
+      const via = this.applicableDestinations[0].via
+
+      if (via?.startsWith('via')) return via
+      else if (via) return `via ${via}`
+    }
+
+    return null
   }
 
   /**
@@ -285,6 +331,20 @@ export class TrainService {
    */
   getScheduledDestinationsText(): string {
     return getOriginsOrDestinationsAsText(this.scheduledDestinations)
+  }
+
+  /**
+   * Creates a string that combines the active origins, if defined, otherwise the scheduled origins for this train.
+   */
+  getActiveOriginsText(): string {
+    return getOriginsOrDestinationsAsText(this.activeOrigins)
+  }
+
+  /**
+   * Creates a string that combines the active destinations, if defined, otherwise the scheduled destinations for this train.
+   */
+  getActiveDestinationsText(): string {
+    return getOriginsOrDestinationsAsText(this.activeDestinations)
   }
 
   /**
