@@ -1,38 +1,60 @@
-import React from 'react'
-import { GestureResponderEvent, StyleSheet, View } from 'react-native'
+import React, { useState } from 'react'
+import { GestureResponderEvent, StyleSheet, View, Pressable } from 'react-native'
 import { TouchableHighlight } from 'react-native-gesture-handler'
 import { ThemeProps } from '../types'
 import { Text, useThemeColor } from './Themed'
 import { Ionicons } from '@expo/vector-icons'
+import makePressableStyle from '../helpers/makePressableStyle'
+import { marginTop } from 'styled-system'
 
 interface Props {
   value?: string
   placeholder: string
   onPress: ((event: GestureResponderEvent) => void) & (() => void)
   disabled?: boolean
+  showResetButton: boolean
+  onReset: () => void
 }
 
-const FakeSelectDropdown: React.FC<Props & ThemeProps> = ({ value, placeholder, onPress, darkColor, lightColor, disabled }) => {
+const FakeSelectDropdown: React.FC<Props & ThemeProps> = ({
+  value,
+  placeholder,
+  onPress,
+  darkColor,
+  lightColor,
+  disabled,
+  showResetButton,
+  onReset,
+}) => {
   const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'border')
   const raisedBackgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raisedBackground')
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
 
   const customStyle = { borderColor, backgroundColor: raisedBackgroundColor }
 
   return (
-    <TouchableHighlight
+    <Pressable
       disabled={disabled}
       onPress={onPress}
-      containerStyle={styles.containerRoot}
-      style={[styles.root, customStyle]}
-      underlayColor={backgroundColor}
+      style={({ pressed }) => [styles.root, customStyle, makePressableStyle(pressed, lightColor, darkColor)]}
     >
       <View style={styles.select}>
         <Text style={styles.text}>{value ? value : placeholder}</Text>
+        {showResetButton && (
+          <Pressable
+            disabled={disabled}
+            style={({ pressed }) => [
+              { borderRadius: 999, padding: 4, marginTop: -4, marginBottom: -4 },
+              makePressableStyle(pressed, lightColor, darkColor),
+            ]}
+            onPress={onReset}
+          >
+            <Ionicons name="ios-close-circle-outline" size={20} color={color} />
+          </Pressable>
+        )}
         <Ionicons name="ios-chevron-down-outline" size={18} color={color} />
       </View>
-    </TouchableHighlight>
+    </Pressable>
   )
 }
 
@@ -47,11 +69,11 @@ const styles = StyleSheet.create({
     padding: 12,
     paddingLeft: 16,
     paddingRight: 16,
-    marginTop: 16,
   },
   select: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
   },
   text: {
     fontSize: 16,
