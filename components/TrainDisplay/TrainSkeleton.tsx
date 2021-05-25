@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Center, Skeleton, VStack } from 'native-base'
+import { Center, Skeleton, VStack, HStack } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
 import { useThemeColor } from '../Themed'
 import type { ThemeProps } from '../../types'
@@ -18,19 +18,18 @@ const TrainSkeleton: React.FC<ThemeProps> = ({ lightColor, darkColor }) => {
   }
 
   return (
-    <View style={[styles.root, { borderBottomColor: mutedColor }]}>
-      <VStack space={1} style={styles.trainDetails}>
+    <HStack space={2} style={[styles.root, { borderBottomColor: mutedColor }]}>
+      <View style={styles.trainTimes}>
         <Skeleton variant="text" height="20px" {...skeletonProps} />
-        <Skeleton variant="text" height="14px" {...skeletonProps} />
-      </VStack>
-      <VStack space={1} style={styles.trainTimes}>
-        <Skeleton variant="text" height="22px" {...skeletonProps} />
-        <Skeleton variant="text" height="12px" {...skeletonProps} />
+      </View>
+      <VStack space={1} style={styles.trainDetails}>
+        <Skeleton variant="text" height="18px" {...skeletonProps} />
+        <Skeleton variant="text" height="16px" {...skeletonProps} />
       </VStack>
       <Center>
         <Ionicons name="ios-chevron-forward-outline" size={24} color={mutedColor} />
       </Center>
-    </View>
+    </HStack>
   )
 }
 
@@ -44,11 +43,11 @@ const styles = StyleSheet.create({
   },
   trainDetails: {
     flex: 1,
-    marginRight: 8,
   },
   trainTimes: {
-    minWidth: 48,
-    marginRight: 8,
+    flexBasis: 52,
+    display: 'flex',
+    justifyContent: 'center',
   },
   skeleton: {
     margin: 0,
