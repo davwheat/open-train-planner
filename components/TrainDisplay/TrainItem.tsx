@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Center, VStack } from 'native-base'
+import { StyleSheet } from 'react-native'
+import { Center, VStack, HStack } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
 import { Text, useThemeColor } from '../Themed'
 import type { ThemeProps } from '../../types'
@@ -16,7 +16,7 @@ const TrainItem: React.FC<ThemeProps & { service: TrainService }> = ({ lightColo
   const [isDetailsModalShown, setIsDetailsModalShown] = useState(false)
 
   const extraInfo = `${service.data.operator}`
-  const timeDifference = service.getTimeDifference()
+  // const timeDifference = service.getTimeDifference()
 
   const [timeDifferenceText, setTimeDifferenceText] = useState(service.getTimeDifferenceString())
 
@@ -42,7 +42,7 @@ const TrainItem: React.FC<ThemeProps & { service: TrainService }> = ({ lightColo
 
   return (
     <TouchableHighlight underlayColor={backgroundColor} onPress={onPress}>
-      <View style={[styles.root, { borderBottomColor: mutedColor }]}>
+      <HStack space={2} style={[styles.root, { borderBottomColor: mutedColor }]}>
         <Center style={styles.trainTimes}>
           <Text style={[styles.ogTime, timeChanged && styles.strikeThrough, !timeChanged && styles.bold]}>
             {service.timetabledTimeOfDeparture}
@@ -61,7 +61,7 @@ const TrainItem: React.FC<ThemeProps & { service: TrainService }> = ({ lightColo
           <Ionicons name="ios-chevron-forward-outline" size={24} color={mutedColor} />
         </Center>
         <TrainFullDetailsCard onClose={() => setIsDetailsModalShown(false)} trainService={service} open={isDetailsModalShown} />
-      </View>
+      </HStack>
     </TouchableHighlight>
   )
 }
@@ -76,10 +76,8 @@ const styles = StyleSheet.create({
   },
   trainDetails: {
     flex: 1,
-    marginRight: 8,
   },
   trainTimes: {
-    marginRight: 8,
     alignContent: 'center',
     display: 'flex',
     minWidth: 52,

@@ -1,12 +1,17 @@
 import * as React from 'react'
-import { Alert, StyleSheet } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button, View } from 'native-base'
+import { Button, VStack } from 'native-base'
 
 import { Text } from '../../components/Themed'
 
 import StationSelectBox from '../../components/StationSelectBox'
-import { liveTrains_departureStationAtom, liveTrains_departureStationFilterAtom } from '../../atoms/liveTrainsStationSelectAtom'
+import {
+  liveTrains_arrivalStationAtom,
+  liveTrains_arrivalStationFilterAtom,
+  liveTrains_departureStationAtom,
+  liveTrains_departureStationFilterAtom,
+} from '../../atoms/liveTrainsStationSelectAtom'
 import Card from '../../components/Card'
 import FadeInView from '../../components/FadeInView'
 import TrainSkeleton from '../../components/TrainDisplay/TrainSkeleton'
@@ -17,24 +22,31 @@ import FetchDepartureBoard from '../../api/FetchDepartureBoard'
 import { useRecoilValue } from 'recoil'
 import { IDepartureBoardResponse } from '../../models/DepartureBoardResponse'
 import { TrainService } from '../../models/TrainService'
-import { Headline } from '../../components/Typography'
+import { Whisper } from '../../components/Typography'
 
 export default function LiveTrainsScreen() {
   const [isLoading, setIsLoading] = React.useState(false)
   const [trainData, setTrainData] = React.useState<{ results: null | IDepartureBoardResponse }>({ results: null })
 
-  const selectedStation = useRecoilValue(liveTrains_departureStationAtom)
+  const selectedDepartureStation = useRecoilValue(liveTrains_departureStationAtom)
+  const selectedArrivalStation = useRecoilValue(liveTrains_arrivalStationAtom)
 
   const onSearchPress = React.useCallback(() => {
     setIsLoading(true)
     setTrainData({ results: null })
 
-    if (selectedStation === null) {
+    if (selectedDepartureStation === null) {
       setIsLoading(false)
       return
     }
 
-    FetchDepartureBoard({ crsCode: selectedStation.crsCode })
+    console.log(selectedArrivalStation)
+
+    FetchDepartureBoard({
+      crsCode: selectedDepartureStation.crsCode,
+      filterType: 'to',
+      filterCrsCode: selectedArrivalStation?.crsCode || undefined,
+    })
       .then(data => {
         setTrainData({ results: data })
       })
@@ -45,29 +57,41 @@ export default function LiveTrainsScreen() {
       .then(() => {
         setIsLoading(false)
       })
-  }, [FetchDepartureBoard, setIsLoading, selectedStation])
+  }, [FetchDepartureBoard, setIsLoading, selectedDepartureStation])
 
   return (
     <ScrollView>
       <FadeInView>
         <View style={styles.container}>
           <Card>
-            <Headline>Departure station</Headline>
-            <StationSelectBox
-              disabled={isLoading}
-              selectionAtom={liveTrains_departureStationAtom}
-              filterAtom={liveTrains_departureStationFilterAtom}
-            />
+            <VStack space={2}>
+              <Whisper>Departure station</Whisper>
 
-            <Button
-              isLoading={isLoading}
-              isLoadingText="Searching..."
-              style={styles.searchButton}
-              isDisabled={selectedStation === null}
-              onPress={onSearchPress}
-            >
-              To the trains!
-            </Button>
+              <StationSelectBox
+                disabled={isLoading}
+                selectionAtom={liveTrains_departureStationAtom}
+                filterAtom={liveTrains_departureStationFilterAtom}
+              />
+
+              <Whisper style={styles.arrivalStationLabel}>Arrival station (optional)</Whisper>
+
+              <StationSelectBox
+                showResetButton
+                disabled={isLoading}
+                selectionAtom={liveTrains_arrivalStationAtom}
+                filterAtom={liveTrains_arrivalStationFilterAtom}
+              />
+
+              <Button
+                isLoading={isLoading}
+                isLoadingText="Searching..."
+                style={styles.searchButton}
+                isDisabled={selectedDepartureStation === null}
+                onPress={onSearchPress}
+              >
+                To the trains!
+              </Button>
+            </VStack>
           </Card>
 
           {(isLoading || trainData.results) && (
@@ -91,7 +115,7 @@ export default function LiveTrainsScreen() {
                 </View>
               ) : (
                 <View style={styles.trainList}>
-                  <Text>No trains could be found from {selectedStation?.stationName} at the moment.</Text>
+                  <Text>No trains could be found from {selectedDepartureStation?.stationName} at the moment.</Text>
                 </View>
               )}
             </Card>
@@ -115,6 +139,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  arrivalStationLabel: {
+    marginTop: 4,
+  },
   separator: {
     marginVertical: 30,
     height: 1,
@@ -127,7 +154,7 @@ const styles = StyleSheet.create({
     maxWidth: '75%',
   },
   searchButton: {
-    marginTop: 16,
+    marginTop: 8,
   },
   results: {
     fontWeight: 'bold',
