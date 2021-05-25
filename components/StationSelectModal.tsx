@@ -6,7 +6,7 @@ import { Portal } from 'react-native-portalize'
 import { TouchableHighlight } from 'react-native-gesture-handler'
 import Fuse from 'fuse.js'
 
-import { TextArea } from 'native-base'
+import { TextField } from 'native-base'
 
 import { stationsListAtom } from '../atoms'
 import type { StationPair, ThemeProps } from '../types'
@@ -114,8 +114,8 @@ const Header: React.FC<{ filterAtom: Props['filterAtom'] }> = ({ filterAtom }) =
 
   return (
     <View style={[styles.header]}>
-      <Headline>Choose station</Headline>
-      <TextArea style={styles.textField} placeholder="Search..." value={stationSelectFilter} onChange={onChange} />
+      <Headline style={styles.headerTitle}>Choose station</Headline>
+      <TextField style={styles.textField} placeholder="Search..." value={stationSelectFilter} onChange={onChange} />
     </View>
   )
 }
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     paddingTop: 32,
   },
   header: {
-    marginBottom: 16,
+    marginBottom: 8,
   },
   item: {
     padding: 4,
@@ -154,9 +154,10 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
   },
-  textField: {
-    marginTop: 16,
+  headerTitle: {
+    marginBottom: 16,
   },
+  textField: {},
   handle: {
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
