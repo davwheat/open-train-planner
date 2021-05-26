@@ -5,14 +5,14 @@ import { Modalize } from 'react-native-modalize'
 import { Portal } from 'react-native-portalize'
 import { TouchableHighlight } from 'react-native-gesture-handler'
 import Fuse from 'fuse.js'
+import { Ionicons } from '@expo/vector-icons'
 
-import { TextField } from 'native-base'
+import { TextField, HStack, VStack } from 'native-base'
 
-import { stationsListAtom } from '../atoms'
+import { favouriteStationsAtom, stationsListAtom } from '../atoms'
 import type { StationPair, ThemeProps } from '../types'
 import { Text, useThemeColor } from './Themed'
-import { Headline } from './Typography'
-import useKeyboardState from '../hooks/useKeyboardState'
+import { Headline, SpeakUp } from './Typography'
 
 interface Props {
   onSelectStation: (station: StationPair) => void
@@ -20,6 +20,7 @@ interface Props {
   disabled?: boolean
   open?: boolean
   modalRef: React.RefObject<Modalize>
+  showFavouriteStationsInList: boolean
 }
 
 interface ItemProps {
@@ -35,11 +36,14 @@ const StationSelectModal: React.FC<Props & ThemeProps> = ({
   disabled = false,
   // open = true,
   modalRef,
+  showFavouriteStationsInList = false,
 }) => {
   const stationsList = useRecoilValue(stationsListAtom)
   const stationFilter = useRecoilValue(filterAtom)
+  const favouriteStations = useRecoilValue(favouriteStationsAtom)
 
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'raisedBackground')
+  const iconColor = useThemeColor({ light: lightColor, dark: darkColor }, 'text')
 
   if (disabled) {
     modalRef?.current?.close()
@@ -94,6 +98,19 @@ const StationSelectModal: React.FC<Props & ThemeProps> = ({
           {firstTen?.map(item => (
             <MemoisedItem key={item.crsCode} stationName={item.stationName} crsCode={item.crsCode} />
           ))}
+
+          {firstTen.length === 0 && showFavouriteStationsInList && (
+            <VStack>
+              <HStack style={{ alignItems: 'center', marginBottom: 8 }} space={2}>
+                <Ionicons name="ios-star" size={20} color={iconColor} />
+                <SpeakUp>Favourites</SpeakUp>
+              </HStack>
+
+              {favouriteStations?.map(item => (
+                <MemoisedItem key={`fav-${item.crsCode}`} stationName={item.stationName} crsCode={item.crsCode} />
+              ))}
+            </VStack>
+          )}
         </View>
       </Modalize>
     </Portal>

@@ -12,9 +12,16 @@ interface Props {
   filterAtom: RecoilState<string>
   disabled?: boolean
   showResetButton?: boolean
+  showFavouriteStationsInList?: boolean
 }
 
-const StationSelectBox: React.FC<Props> = ({ selectionAtom, filterAtom, disabled = false, showResetButton = false }) => {
+const StationSelectBox: React.FC<Props> = ({
+  selectionAtom,
+  filterAtom,
+  disabled = false,
+  showResetButton = false,
+  showFavouriteStationsInList = false,
+}) => {
   const [stationSelection, setStationSelection] = useRecoilState(selectionAtom)
   const resetStation = useResetRecoilState(selectionAtom)
 
@@ -54,7 +61,13 @@ const StationSelectBox: React.FC<Props> = ({ selectionAtom, filterAtom, disabled
         placeholder="Select station"
         onPress={open}
       />
-      <StationSelectModal filterAtom={filterAtom} disabled={disabled} modalRef={modalRef} onSelectStation={onSelectStation} />
+      <StationSelectModal
+        showFavouriteStationsInList
+        filterAtom={filterAtom}
+        disabled={disabled}
+        modalRef={modalRef}
+        onSelectStation={onSelectStation}
+      />
     </>
   )
 }

@@ -68,6 +68,7 @@ export default function LiveTrainsScreen() {
               <Whisper>Departure station</Whisper>
 
               <StationSelectBox
+                showFavouriteStationsInList
                 disabled={isLoading}
                 selectionAtom={liveTrains_departureStationAtom}
                 filterAtom={liveTrains_departureStationFilterAtom}
@@ -76,6 +77,7 @@ export default function LiveTrainsScreen() {
               <Whisper style={styles.arrivalStationLabel}>Arrival station (optional)</Whisper>
 
               <StationSelectBox
+                showFavouriteStationsInList
                 showResetButton
                 disabled={isLoading}
                 selectionAtom={liveTrains_arrivalStationAtom}
