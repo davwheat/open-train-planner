@@ -117,7 +117,14 @@ export default function LiveTrainsScreen() {
                 </View>
               ) : (
                 <View style={styles.trainList}>
-                  <Text>No trains could be found from {selectedDepartureStation?.stationName} at the moment.</Text>
+                  {selectedArrivalStation ? (
+                    <Text>
+                      There are no direct trains between {selectedDepartureStation?.stationName} and {selectedArrivalStation?.stationName} in the
+                      next 2 hours.
+                    </Text>
+                  ) : (
+                    <Text>No trains could be found from {selectedDepartureStation?.stationName} at the moment.</Text>
+                  )}
                 </View>
               )}
             </Card>
