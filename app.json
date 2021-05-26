@@ -15,9 +15,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false
     },
@@ -26,7 +24,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#008DDE"
       },
-      "package": "com.davwheat.opentrainplanner"
+      "package": "com.davwheat.opentrainplanner",
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
