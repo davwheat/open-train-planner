@@ -11,7 +11,10 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "format": "prettier --write \"**/*.{js,ts,jsx,tsx,json,md}\""
+    "format": "prettier --write \"**/*.{js,ts,jsx,tsx,json,md}\"",
+    "build:android": "yarn build:android:apk && yarn build:android:aab",
+    "build:android:apk": "expo build:android -t apk",
+    "build:android:aab": "expo build:android -t app-bundle"
   },
   "license": "MPL-2.0",
   "jest": {
