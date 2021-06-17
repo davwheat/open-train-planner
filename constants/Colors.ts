@@ -34,6 +34,6 @@ export default {
     raisedBackground: '#111',
     border: tintColorDark,
     muted: mutedColorDark,
-    controlPressed: '#181818',
+    controlPressed: '#1f1f1f',
   },
 }
