@@ -73,6 +73,8 @@ const styles = StyleSheet.create({
 
     padding: 24,
     paddingTop: 32,
+
+    minHeight: '90%',
   },
   item: {
     padding: 4,
