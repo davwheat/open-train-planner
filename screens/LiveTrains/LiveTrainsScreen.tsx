@@ -40,12 +40,10 @@ export default function LiveTrainsScreen() {
       return
     }
 
-    console.log(selectedArrivalStation)
-
     FetchDepartureBoard({
       crsCode: selectedDepartureStation.crsCode,
       filterType: 'to',
-      filterCrsCode: selectedArrivalStation?.crsCode || undefined,
+      filterCrsCode: selectedArrivalStation?.crsCode,
     })
       .then(data => {
         setTrainData({ results: data })

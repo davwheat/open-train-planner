@@ -17,7 +17,7 @@ const USE_DEBUG_DATA = false
 interface DepartureBoardOptions {
   crsCode: string
   filterType?: 'from' | 'to'
-  filterCrsCode?: string
+  filterCrsCode?: string | undefined
 }
 
 export default async function FetchDepartureBoard({
