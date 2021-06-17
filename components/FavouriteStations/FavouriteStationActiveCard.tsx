@@ -73,7 +73,7 @@ const FavouriteStationActiveCard: React.FC<IStationActivateCardProps & ThemeProp
               onPress={() => {
                 // setLiveTrainsDepartureStnState(station)
                 close()
-                navigation.navigate('Train Planner')
+                navigation.navigate('Journey Planner')
               }}
             >
               Plan a journey

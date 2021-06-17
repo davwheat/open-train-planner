@@ -7,12 +7,12 @@ import { Text, View } from '../components/Themed'
 import PoweredByNationalRailEnquiries from '../components/PoweredByNationalRailEnquiries'
 import { Headline } from '../components/Typography'
 
-export default function TrainPlannerScreen() {
+export default function JourneyPlannerScreen() {
   return (
     <ScrollView>
       <FadeInView>
         <View style={styles.container}>
-          <Headline style={styles.title}>Train planner</Headline>
+          <Headline style={styles.title}>Journey Planner</Headline>
           <Text style={styles.getStartedText}>You'll be able to find the fastest route between two stations from this page.</Text>
           <PoweredByNationalRailEnquiries />
         </View>

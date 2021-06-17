@@ -14,7 +14,7 @@ import { BottomTabParamList, HomeParamList, LiveTrainsParamList, TrainPlannerPar
 
 import WelcomeScreen from '../screens/HomeScreen'
 import LiveTrainsScreen from '../screens/LiveTrains/LiveTrainsScreen'
-import TrainPlannerScreen from '../screens/TrainPlannerScreen'
+import JourneyPlannerScreen from '../screens/JourneyPlannerScreen'
 import { Host } from 'react-native-portalize'
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>()
@@ -40,7 +40,7 @@ export default function BottomTabNavigator() {
           }}
         />
         <BottomTab.Screen
-          name="Train Planner"
+          name="Journey Planner"
           component={TrainPlannerNavigator}
           options={{
             tabBarIcon: ({ color }) => <TabBarIcon name="ios-map-outline" color={color} />,
@@ -85,7 +85,7 @@ const TrainPlannerStack = createStackNavigator<TrainPlannerParamList>()
 function TrainPlannerNavigator() {
   return (
     <TrainPlannerStack.Navigator>
-      <TrainPlannerStack.Screen name="Train Planner" component={TrainPlannerScreen} options={{ headerTitle: 'Train Planner' }} />
+      <TrainPlannerStack.Screen name="Journey Planner" component={JourneyPlannerScreen} options={{ headerTitle: 'Journey Planner' }} />
     </TrainPlannerStack.Navigator>
   )
 }

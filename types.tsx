@@ -11,7 +11,7 @@ export type RootStackParamList = {
 export type BottomTabParamList = {
   Home: undefined
   'Live Trains': undefined
-  'Train Planner': undefined
+  'Journey Planner': undefined
 }
 
 export type HomeParamList = {
@@ -23,7 +23,7 @@ export type LiveTrainsParamList = {
 }
 
 export type TrainPlannerParamList = {
-  'Train Planner': undefined
+  'Journey Planner': undefined
 }
 
 // ------------------------------
