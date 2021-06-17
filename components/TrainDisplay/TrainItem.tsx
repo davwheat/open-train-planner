@@ -11,7 +11,7 @@ import { cancelledColor, delayedColor } from '../../constants/Colors'
 
 const TrainItem: React.FC<ThemeProps & { service: TrainService }> = ({ lightColor, darkColor, service }) => {
   const mutedColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
+  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'controlPressed')
 
   const [isDetailsModalShown, setIsDetailsModalShown] = useState(false)
 

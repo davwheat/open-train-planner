@@ -13,7 +13,7 @@ interface IFavouriteStationItemProps {
 
 const FavouriteStationItem: React.FC<ThemeProps & IFavouriteStationItemProps> = ({ station, lightColor, darkColor }) => {
   const mutedColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted')
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
+  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'controlPressed')
 
   const [stationActiveCardOpen, setStationActiveCardOpen] = useState(false)
 
