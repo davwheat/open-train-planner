@@ -1,10 +1,11 @@
 {
   "expo": {
     "name": "Open Train Planner",
-    "slug": "open-train-planner",
-    "version": "1.0.0",
-    "orientation": "portrait",
     "icon": "./assets/images/icon.png",
+    "version": "1.0.0",
+    "slug": "open-train-planner",
+    "owner": "davwheat",
+    "orientation": "portrait",
     "scheme": "open-train-planner",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -17,7 +18,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.davwheat.opentrainplanner"
     },
     "android": {
       "adaptiveIcon": {
