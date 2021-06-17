@@ -13,7 +13,7 @@ const BasicTrainInfo: React.FC<Props> = ({ train }) => {
   let text: string[] = []
 
   if (train.operatingCompany)
-    text.push(`${train.operatingCompany} service ${train.getCoachesText({ addFullStop: true, capitaliseStart: false })}`)
+    text.push(`${train.operatingCompany} service ${train.getFormedOfCoachesText({ addFullStop: true, capitaliseStart: false })}`)
 
   return (
     <VStack space={1}>

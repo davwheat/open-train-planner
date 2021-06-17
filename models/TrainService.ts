@@ -285,7 +285,7 @@ export class TrainService {
     if (this.applicableDestinations.length === 1) {
       const via = this.applicableDestinations[0].via
 
-      if (via?.startsWith('via')) return via
+      if (via?.toLowerCase()?.startsWith('via ')) return `via ${via.substr(4)}`
       else if (via) return `via ${via}`
     }
 
@@ -395,7 +395,7 @@ export class TrainService {
    *
    * @example '12 coaches'
    * @example '1 coach'
-   * @example 'unknown length'
+   * @example '' // unknown length
    */
   getCoachesText(options: Partial<StringifyFunctionOptions>): string {
     let text = ''
@@ -405,10 +405,27 @@ export class TrainService {
     } else if (this.data.length ?? 0 > 1) {
       text = `${this.data.length} coaches`
     } else {
-      return 'unknown length'
+      return ''
     }
 
     return applyStringifyOptions(text, options)
+  }
+
+  /**
+   * Get the number of coaches in this service.
+   *
+   * @example 'Formed of 12 coaches'
+   * @example 'Formed of 1 coach'
+   * @example '' // unknown length
+   */
+  getFormedOfCoachesText(options: Partial<StringifyFunctionOptions>): string {
+    const coaches = this.getCoachesText({ addFullStop: false, capitaliseStart: false })
+
+    const out = coaches ? `formed of ${coaches}` : ''
+
+    if (out) {
+      return applyStringifyOptions(out, options)
+    } else return ''
   }
 
   /**
