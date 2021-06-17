@@ -27,7 +27,7 @@
         "backgroundColor": "#008DDE"
       },
       "package": "com.davwheat.opentrainplanner",
-      "permissions": []
+      "permissions": ["ACCESS_FINE_LOCATION"]
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
