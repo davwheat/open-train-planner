@@ -9,10 +9,11 @@ import { Ionicons } from '@expo/vector-icons'
 
 import { TextField, HStack, VStack } from 'native-base'
 
-import { favouriteStationsAtom, stationsListAtom } from '../atoms'
+import { favouriteStationsAtom } from '../atoms'
 import type { StationPair, ThemeProps } from '../types'
 import { Text, useThemeColor } from './Themed'
 import { Headline, SpeakUp } from './Typography'
+import getStationsList from '../helpers/getStationsList'
 
 interface Props {
   onSelectStation: (station: StationPair) => void
@@ -38,7 +39,7 @@ const StationSelectModal: React.FC<Props & ThemeProps> = ({
   modalRef,
   showFavouriteStationsInList = false,
 }) => {
-  const stationsList = useRecoilValue(stationsListAtom)
+  const stationsList = getStationsList()
   const stationFilter = useRecoilValue(filterAtom)
   const favouriteStations = useRecoilValue(favouriteStationsAtom)
 

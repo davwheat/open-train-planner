@@ -39,15 +39,24 @@ export type StationPair = {
   crsCode: string
 }
 
-export interface StationsListInStorage {
+export type StationFullItem = {
   /**
-   * Date that the stations list was last updated.
+   * Station name.
    */
-  lastUpdated: number
+  stationName: string
   /**
-   * The stations list.
+   * Station CRS code.
    */
-  data: StationPair[]
+  crsCode: string
+  /**
+   * Station latitude.
+   */
+  lat: number
+  /**
+   * Station longitude.
+   */
+  long: number
+  iataAirportCode: string | null
 }
 
 export type ThemeProps = {
