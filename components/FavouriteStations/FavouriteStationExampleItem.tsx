@@ -48,7 +48,7 @@ const FavouriteStationExampleItem: React.FC<ThemeProps> = ({ lightColor, darkCol
         <Center>
           <Ionicons name="ios-chevron-forward-outline" size={24} color={mutedColor} />
         </Center>
-        <SelectStationModal modalRef={modalRef} filterAtom={favouriteStationsFilterAtom} onSelectStation={onPickStation} />
+        <SelectStationModal showFavouriteStationsInList={false} modalRef={modalRef} filterAtom={favouriteStationsFilterAtom} onSelectStation={onPickStation} />
       </View>
     </Pressable>
   )
