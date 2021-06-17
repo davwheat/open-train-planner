@@ -8,6 +8,7 @@ import Card from '../Card'
 import Headline from '../Typography/Headline'
 import FavouriteStationExampleItem from './FavouriteStationExampleItem'
 import FavouriteStationItem from './FavouriteStationItem'
+import FavouriteStationMaximumReachedItem from './FavouriteStationMaximumReachedItem'
 
 const FavouriteStationsCard: React.FC = () => {
   const favouriteStations = useRecoilValue(favouriteStationsAtom)
@@ -18,10 +19,10 @@ const FavouriteStationsCard: React.FC = () => {
 
       <View style={styles.faves}>
         <VStack>
-          {favouriteStations.map(station => (
+          {favouriteStations.slice(0, 5).map(station => (
             <FavouriteStationItem station={station} key={station.crsCode} />
           ))}
-          <FavouriteStationExampleItem />
+          {favouriteStations.length >= 5 ? <FavouriteStationMaximumReachedItem /> : <FavouriteStationExampleItem />}
         </VStack>
       </View>
     </Card>
