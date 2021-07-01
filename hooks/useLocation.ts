@@ -48,7 +48,10 @@ export default function useLocation(): [ILocationState, ForceLocationUpdateFunc]
     const state: ILocationState = {
       locationFetched: true,
       permissionStatus: status,
-      location: await Location.getCurrentPositionAsync({ mayShowUserSettingsDialog: true, accuracy: Location.LocationAccuracy.High }),
+      location:
+        status !== Location.PermissionStatus.GRANTED
+          ? undefined
+          : await Location.getCurrentPositionAsync({ mayShowUserSettingsDialog: true, accuracy: Location.LocationAccuracy.High }),
     }
 
     setLocation(state)
