@@ -32,7 +32,7 @@ const FavouriteStationItem: React.FC<ThemeProps & IFavouriteStationItemProps> = 
         <VStack space={1} style={styles.info}>
           <Text style={styles.name}>{station.stationName}</Text>
           <Text style={styles.crs}>
-            {station.crsCode} • {(station.distance / 1000).toFixed(1)} km
+            {station.crsCode} • {(station.distance / 1000).toFixed(1)} km away
           </Text>
         </VStack>
         <Center>
