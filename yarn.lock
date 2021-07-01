@@ -2486,10 +2486,10 @@
     "@react-stately/radio" "^3.2.1"
     "@react-types/radio" "^3.1.1"
 
-"@react-native-aria/slider@^0.2.5-alpha.0":
-  version "0.2.5-alpha.0"
-  resolved "https://registry.yarnpkg.com/@react-native-aria/slider/-/slider-0.2.5-alpha.0.tgz#1ee8918bd254bb73a16797f0e9042096adb40c09"
-  integrity sha512-+VGny075PUwI1n/RWDiTuymZW59/WQv6h8hB56Gsf7ga+Xd4ielCVr9yUEOrCN+0jxuc9F95YhsbvR4/Vr7XIw==
+"@react-native-aria/slider@^0.2.5-alpha.1":
+  version "0.2.5-alpha.1"
+  resolved "https://registry.yarnpkg.com/@react-native-aria/slider/-/slider-0.2.5-alpha.1.tgz#59d14bf19b662fe339ba17b567cb8d155e345cde"
+  integrity sha512-4xdWdBiMJlA8onSybb/Py48wAk7+6CoQViYxeM9rnXZCpk6ltBcwjSo9znKme8cjOMhutV0h+W0lTiB3kQlEAA==
   dependencies:
     "@react-aria/focus" "^3.2.3"
     "@react-aria/label" "^3.1.1"
@@ -3238,10 +3238,10 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@~16.14.8":
-  version "16.14.8"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.8.tgz#4aee3ab004cb98451917c9b7ada3c7d7e52db3fe"
-  integrity sha512-QN0/Qhmx+l4moe7WJuTxNiTsjBwlBGHqKGvInSQCBdo7Qio0VtOqwsC0Wq7q3PbJlB0cR4Y4CVo1OOe6BOsOmA==
+"@types/react@~16.14.10":
+  version "16.14.10"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.10.tgz#76bc1c42ed5ab0d2ab13e5c58faaccaad3449477"
+  integrity sha512-QadBsMyF6ldjEAXEhsmEW/L0uBDJT8yw7Qoe5sRnEKVrzMkiYoJwqoL5TKJOlArsn/wvIJM/XdVzkdL6+AS64Q==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -7474,10 +7474,10 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-native-base@^3.0.0-next.40:
-  version "3.0.0-test.41-1"
-  resolved "https://registry.yarnpkg.com/native-base/-/native-base-3.0.0-test.41-1.tgz#82374bb3fb7fc60c0920eb999e83ea1f35bf6811"
-  integrity sha512-dB/ngeITWZbCwDeeKe+AtjxffxUSeEjAsOoNoxH2XX+gwVgtSzVdlo3fwNOUyAnnUOzjOen+LJXb2VV2IlEFLw==
+native-base@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/native-base/-/native-base-3.0.3.tgz#089250778919509dc1eb3d18d60ab282fbcda28b"
+  integrity sha512-hCPHDUynl223A2nbgMY3jJUcw/GElLvjnNFvyg0Pewa4cNlngbg2StjUmKiBdnEgmwGYyl2AtE3tUnFKAXjqJQ==
   dependencies:
     "@react-aria/visually-hidden" "^3.2.1"
     "@react-native-aria/button" "^0.2.4"
@@ -7488,7 +7488,7 @@ native-base@^3.0.0-next.40:
     "@react-native-aria/listbox" "^0.2.4-alpha.0"
     "@react-native-aria/overlays" "^0.2.9"
     "@react-native-aria/radio" "^0.2.4"
-    "@react-native-aria/slider" "^0.2.5-alpha.0"
+    "@react-native-aria/slider" "^0.2.5-alpha.1"
     "@react-native-aria/tabs" "^0.2.7"
     "@react-native-aria/utils" "^0.2.7"
     "@react-stately/combobox" "^3.0.0-alpha.1"
@@ -8074,10 +8074,10 @@ prepend-http@^2.0.0:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
 
-prettier@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.1.tgz#76903c3f8c4449bc9ac597acefa24dc5ad4cbea6"
-  integrity sha512-p+vNbgpLjif/+D+DwAZAbndtRrR0md0MwfmOVN9N+2RgyACMT+7tfaRnT+WDPkqnuVwleyuBIG2XBxKDme3hPA==
+prettier@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.2.tgz#ef280a05ec253712e486233db5c6f23441e7342d"
+  integrity sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==
 
 pretty-format@^24.9.0:
   version "24.9.0"
@@ -8412,10 +8412,10 @@ realpath-native@^2.0.0:
   resolved "https://registry.yarnpkg.com/realpath-native/-/realpath-native-2.0.0.tgz#7377ac429b6e1fd599dc38d08ed942d0d7beb866"
   integrity sha512-v1SEYUOXXdbBZK8ZuNgO4TBjamPsiSgcFr0aP+tEKpQZK8vooEUqV6nm6Cv502mX4NF2EfsnVqtNAHG+/6Ur1Q==
 
-recoil-persistence@^0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/recoil-persistence/-/recoil-persistence-0.2.5.tgz#67f5f2489d7c3c3ff218a3adc9ab40298740e14a"
-  integrity sha512-VrBerI/Ngoy4Z4qIxZTjtp2wdubHfH5gQCmOycJYyxd1G8DztMyP9olX4FgOHdJjn8MCQReps+ShIVbKATni2Q==
+recoil-persistence@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/recoil-persistence/-/recoil-persistence-0.2.6.tgz#58ed04b3ac17d6f329cafebaf821c2b21bca4fe7"
+  integrity sha512-kYMr/pFNflzaOIwHdQ7NAWNvmfUjFCCEuHSaC9Z6hg5NVzZMnJHZSQ+F1QBdOa4rA1xz80jyw9QTCABunpJUbw==
   optionalDependencies:
     "@react-native-async-storage/async-storage" "^1.15.0"
 
@@ -9503,10 +9503,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^4.3.4:
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.4.tgz#3f85b986945bcf31071decdd96cf8bfa65f9dcbc"
-  integrity sha512-uauPG7XZn9F/mo+7MrsRjyvbxFpzemRjKEZXS4AK83oP2KKOJPvb+9cO/gmnv8arWZvhnjVOXz7B49m1l0e9Ew==
+typescript@^4.3.5:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
+  integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==
 
 ua-parser-js@^0.7.18:
   version "0.7.28"
