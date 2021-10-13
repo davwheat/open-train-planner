@@ -19,7 +19,7 @@ export default function getNearbyStations(location: LocationObject): FullStation
   let nearbyStations: FullStationItemWithDistance[] = stationsList.reduce((acc, stn) => {
     const distanceInMetres = getDistance({ lat: location.coords.latitude, lon: location.coords.longitude }, { lat: stn.lat, lon: stn.long })
 
-    if (distanceInMetres < 10_000) {
+    if (distanceInMetres < 10000) {
       const newStn: FullStationItemWithDistance = { ...stn, distance: distanceInMetres }
 
       return [...acc, newStn]
