@@ -73,3 +73,11 @@ buck-out/
 web-build/
 
 # @end expo-cli
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
