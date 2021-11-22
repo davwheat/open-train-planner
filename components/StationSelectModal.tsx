@@ -7,7 +7,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler'
 import Fuse from 'fuse.js'
 import { Ionicons } from '@expo/vector-icons'
 
-import { TextField, HStack, VStack } from 'native-base'
+import { HStack, VStack, Input } from 'native-base'
 
 import { favouriteStationsAtom } from '../atoms'
 import type { StationPair, ThemeProps } from '../types'
@@ -50,7 +50,7 @@ const StationSelectModal: React.FC<Props & ThemeProps> = ({
     modalRef?.current?.close()
   }
 
-  const fuse = new Fuse(stationsList.data || [], {
+  const fuse = new Fuse(stationsList || [], {
     minMatchCharLength: 2,
     location: 0,
     threshold: 0.4,
@@ -133,7 +133,7 @@ const Header: React.FC<{ filterAtom: Props['filterAtom'] }> = ({ filterAtom }) =
   return (
     <View style={[styles.header]}>
       <Headline style={styles.headerTitle}>Choose station</Headline>
-      <TextField style={styles.textField} placeholder="Search..." value={stationSelectFilter} onChange={onChange} />
+      <Input style={styles.textField} placeholder="Search..." value={stationSelectFilter} onChange={onChange} />
     </View>
   )
 }
